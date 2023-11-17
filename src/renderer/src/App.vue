@@ -3,5 +3,7 @@ import Editor from "@renderer/components/Editor.vue";
 </script>
 
 <template>
-  <Editor/>
+  <div class="h-screen">
+    <Editor/>
+  </div>
 </template>

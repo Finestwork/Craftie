@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {nextTick, onMounted, ref} from "vue";
+import {nextTick, onMounted, Ref, ref} from "vue";
 import {editor} from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
-let editorWrapper: HTMLDivElement | null = ref(null);
+let editorWrapper: Ref<HTMLDivElement | null> = ref(null);
 let myEditor: editor.IStandaloneCodeEditor | null = null;
 
 onMounted(async ()=> {
@@ -37,5 +37,5 @@ onMounted(async ()=> {
 </script>
 
 <template>
-  <div ref="editorWrapper"></div>
+  <div class="h-screen" ref="editorWrapper"></div>
 </template>
