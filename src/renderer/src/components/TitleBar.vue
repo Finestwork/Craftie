@@ -5,12 +5,10 @@ import TitleBarMaximizeButton from '@components/TitleBarMaximizeButton.vue';
 
 <template>
   <div
-    class="drag-region fixed left-0 top-0 z-50 flex w-full select-none justify-between bg-title-bar-dark"
+    class="drag-region fixed left-0 top-0 z-50 flex h-[32px] w-full select-none justify-between bg-title-bar-dark"
   >
-    <div></div>
     <div class="no-drag-region flex">
-      <TitleBarMaximizeButton />
-      <TitleBarCloseButton />
+      <button type="button">Close</button>
     </div>
   </div>
 </template>
