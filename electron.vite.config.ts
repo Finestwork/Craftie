@@ -13,6 +13,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@renderer': resolve(__dirname, 'src/renderer/src'),
+        '@components': resolve(__dirname, 'src/renderer/src/components'),
         '@composables': resolve(__dirname, 'src/renderer/src/composables')
       }
     },

@@ -4,6 +4,7 @@
     "paths": {
       "base": ["./"],
       "@renderer": ["./src/renderer/src"],
+      "@components": ["./src/renderer/src/components"],
       "@composables": ["./src/renderer/src/composables"],
     }
   },
