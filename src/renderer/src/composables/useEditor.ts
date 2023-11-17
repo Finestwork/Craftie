@@ -1,4 +1,6 @@
 import { editor } from 'monaco-editor';
+import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
 export const init = (editorWrapper: HTMLDivElement) => {
   const EditorOptions = {

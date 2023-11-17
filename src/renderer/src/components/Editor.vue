@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { init } from '../composables/useEditor';
+import { init } from '@composables/useEditor';
 import { nextTick, onMounted, ref } from 'vue';
 
 const editorWrapper = ref(null);

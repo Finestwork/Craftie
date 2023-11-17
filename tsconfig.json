@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "base": ["./"],
-      "@renderer": ["./src/renderer/src"]
+      "@renderer": ["./src/renderer/src"],
+      "@composables": ["./src/renderer/src/composables"],
     }
   },
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
