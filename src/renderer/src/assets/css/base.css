@@ -5,6 +5,9 @@
   .drag-region{
     -webkit-app-region: drag;
   }
+  .no-drag-region{
+    -webkit-app-region: no-drag;
+  }
 }
 
 @font-face {
