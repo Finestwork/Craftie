@@ -17,7 +17,10 @@ export const init = (editorWrapper: HTMLDivElement) => {
     cursorSmoothCaretAnimation: 'on',
     cursorBlinking: 'expand',
     tabSize: 2,
-    fontLigatures: true
+    fontLigatures: true,
+    minimap: {
+      enabled: false
+    }
   };
   let myEditor: editor.IStandaloneCodeEditor | null = null;
   editor.defineTheme('ocean', MaterialOcean);
