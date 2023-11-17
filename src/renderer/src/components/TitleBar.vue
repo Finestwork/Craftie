@@ -3,7 +3,7 @@ import TitleBarCloseButton from '@components/TitleBarCloseButton.vue';
 </script>
 <template>
   <div
-    class="drag-region select-none fixed top-0 left-0 w-full z-50 bg-title-bar-dark flex justify-between"
+    class="drag-region fixed left-0 top-0 z-50 flex w-full select-none justify-between bg-title-bar-dark"
   >
     <div></div>
     <div class="no-drag-region">
