@@ -22,6 +22,7 @@ export const init = (editorWrapper: HTMLDivElement) => {
   let myEditor: editor.IStandaloneCodeEditor | null = null;
   editor.defineTheme('ocean', MaterialOcean);
   myEditor = editor.create(editorWrapper, EditorOptions);
+  myEditor.focus();
   myEditor.onDidChangeModelContent(() => {
     if (myEditor === null) return;
     // Todo: Store the value
