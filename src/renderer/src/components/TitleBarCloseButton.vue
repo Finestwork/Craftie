@@ -8,7 +8,7 @@ const onClickCloseElectron = () => {
 
 <template>
   <button
-    class="group z-50 flex h-[30px] w-[30px] items-center justify-center bg-blue-500 bg-transparent hover:bg-rose-600 focus:bg-rose-600"
+    class="group z-50 flex h-[35px] w-[45px] items-center justify-center bg-blue-500 bg-transparent p-3 hover:bg-rose-600 focus:bg-rose-600"
     type="button"
     @click="onClickCloseElectron"
   >

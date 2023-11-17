@@ -4,7 +4,8 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      closeApp: () => void
+      closeApp: () => void,
+      maximizeApp: () => void
     }
   }
 }

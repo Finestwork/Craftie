@@ -5,6 +5,9 @@ import { electronAPI } from '@electron-toolkit/preload';
 const api = {
   closeApp: () => {
     ipcRenderer.send('closeApp');
+  },
+  maximizeApp: () => {
+    ipcRenderer.send('maximizeApp');
   }
 };
 

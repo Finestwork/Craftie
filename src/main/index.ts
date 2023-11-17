@@ -3,9 +3,11 @@ import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 
+let mainWindow: BrowserWindow | null = null;
+
 function createWindow(): void {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -19,7 +21,7 @@ function createWindow(): void {
   });
 
   mainWindow.on('ready-to-show', () => {
-    mainWindow.show();
+    mainWindow?.show?.();
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -74,4 +76,8 @@ app.on('window-all-closed', () => {
 
 ipcMain.on('closeApp', () => {
   app.quit();
+});
+
+ipcMain.on('maximizeApp', () => {
+  mainWindow?.isMaximized() ? mainWindow?.unmaximize() : mainWindow?.maximize();
 });
