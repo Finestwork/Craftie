@@ -1,0 +1,35 @@
+import { editor } from 'monaco-editor';
+
+export const init = (editorWrapper: HTMLDivElement) => {
+  const EditorOptions = {
+    value: '',
+    language: 'javascript',
+    theme: 'palenight',
+    fontSize: 16,
+    fontFamily: 'JetBrains Mono',
+    lineHeight: 35,
+    fontWeight: '600',
+    cursorSmoothCaretAnimation: 'on',
+    cursorBlinking: 'expand',
+    tabSize: 2,
+    fontLigatures: true
+  };
+  let myEditor: editor.IStandaloneCodeEditor | null = null;
+  myEditor = editor.create(editorWrapper, EditorOptions);
+
+  myEditor.onDidChangeModelContent(() => {
+    if (myEditor === null) return;
+    // Todo: Store the value
+  });
+
+  window.MonacoEnvironment = {
+    getWorker(_, label) {
+      if (label === 'typescript' || label === 'javascript') {
+        return new TypescriptWorker();
+      }
+      return new EditorWorker();
+    }
+  };
+
+  return myEditor;
+};
