@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import {nextTick, onMounted, Ref, ref} from "vue";
-import {editor} from 'monaco-editor';
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import { nextTick, onMounted, ref } from 'vue'
+import { editor } from 'monaco-editor'
+import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-let editorWrapper: Ref<HTMLDivElement | null> = ref(null);
-let myEditor: editor.IStandaloneCodeEditor | null = null;
+const editorWrapper = ref(null)
+let myEditor: editor.IStandaloneCodeEditor | null = null
 
-onMounted(async ()=> {
-  if(editorWrapper === null) return;
-  await nextTick();
+onMounted(async () => {
+  if (editorWrapper.value === null) return
+  await nextTick()
 
   myEditor = editor.create(editorWrapper.value, {
     value: '',
@@ -22,20 +22,25 @@ onMounted(async ()=> {
     cursorSmoothCaretAnimation: 'on',
     cursorBlinking: 'expand',
     tabSize: 2,
-    fontLigatures: true,
-  });
+    fontLigatures: true
+  })
+
+  myEditor.onDidChangeModelContent(() => {
+    if (myEditor === null) return
+    // Todo: Store the value
+  })
 
   window.MonacoEnvironment = {
     getWorker(_, label) {
       if (label === 'typescript' || label === 'javascript') {
-        return new TypescriptWorker();
+        return new TypescriptWorker()
       }
-      return new EditorWorker();
+      return new EditorWorker()
     }
-  };
-});
+  }
+})
 </script>
 
 <template>
-  <div class="h-screen" ref="editorWrapper"></div>
+  <div ref="editorWrapper" class="h-screen"></div>
 </template>
