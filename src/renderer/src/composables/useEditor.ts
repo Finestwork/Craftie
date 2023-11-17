@@ -1,3 +1,6 @@
+import MaterialOcean from '../themes/MaterialOcean';
+
+// NPM
 import { editor } from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
@@ -6,7 +9,7 @@ export const init = (editorWrapper: HTMLDivElement) => {
   const EditorOptions = {
     value: '',
     language: 'javascript',
-    theme: 'palenight',
+    theme: 'ocean',
     fontSize: 16,
     fontFamily: 'JetBrains Mono',
     lineHeight: 35,
@@ -17,8 +20,8 @@ export const init = (editorWrapper: HTMLDivElement) => {
     fontLigatures: true
   };
   let myEditor: editor.IStandaloneCodeEditor | null = null;
+  editor.defineTheme('ocean', MaterialOcean);
   myEditor = editor.create(editorWrapper, EditorOptions);
-
   myEditor.onDidChangeModelContent(() => {
     if (myEditor === null) return;
     // Todo: Store the value
