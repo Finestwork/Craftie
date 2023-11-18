@@ -1,12 +1,13 @@
 import MaterialOcean from '../themes/MaterialOcean';
 
 // NPM
+import { nextTick, onMounted, onUnmounted, Ref } from 'vue';
 import { editor } from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import IStandaloneEditorConstructionOptions = editor.IStandaloneEditorConstructionOptions;
 
-export const init = (editorWrapper: HTMLDivElement) => {
+export const init = (editorWrapper: Ref) => {
   const EditorOptions: IStandaloneEditorConstructionOptions = {
     value: '',
     language: 'javascript',
@@ -26,34 +27,36 @@ export const init = (editorWrapper: HTMLDivElement) => {
   };
   let myEditor: editor.IStandaloneCodeEditor | null = null;
   editor.defineTheme('ocean', MaterialOcean);
-  myEditor = editor.create(editorWrapper, EditorOptions);
-  myEditor.focus();
-  myEditor.onDidChangeModelContent(() => {
-    if (myEditor === null) return;
-    // Todo: Store the value
-  });
-
-  window.MonacoEnvironment = {
-    getWorker(_, label) {
-      if (label === 'typescript' || label === 'javascript') {
-        return new TypescriptWorker();
-      }
-      return new EditorWorker();
-    }
-  };
 
   const updateLayout = () => {
     if (myEditor === null) return;
     myEditor.layout();
   };
-  const dispose = () => {
-    window.removeEventListener('resize', updateLayout);
-    if (myEditor === null) return;
-    myEditor.dispose();
-  };
 
-  window.addEventListener('resize', updateLayout);
-  return {
-    dispose
-  };
+  onMounted(async () => {
+    await nextTick();
+    myEditor = editor.create(editorWrapper.value, EditorOptions);
+    myEditor.onDidChangeModelContent(() => {
+      if (myEditor === null) return;
+      // Todo: Store the value
+    });
+
+    window.MonacoEnvironment = {
+      getWorker(_, label) {
+        if (label === 'typescript' || label === 'javascript') {
+          return new TypescriptWorker();
+        }
+        return new EditorWorker();
+      }
+    };
+
+    // Wait for VDom to be updated
+    await nextTick();
+    myEditor.layout();
+    myEditor.focus();
+    window.addEventListener('resize', updateLayout);
+  });
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateLayout);
+  });
 };
