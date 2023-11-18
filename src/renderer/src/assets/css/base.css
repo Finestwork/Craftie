@@ -120,3 +120,14 @@
   font-weight: 800;
   font-style: italic;
 }
+
+
+html,
+body,
+#app{
+  height: 100%;
+}
+
+body{
+  overflow: hidden;
+}

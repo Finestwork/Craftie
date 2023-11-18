@@ -12,5 +12,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="editorWrapper" class="h-screen w-full"></div>
+  <div ref="editorWrapper" class="h-full w-full"></div>
 </template>

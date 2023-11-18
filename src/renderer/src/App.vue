@@ -30,8 +30,8 @@ onUnmounted(() => {
 
 <template>
   <TitleBar ref="nav" />
-  <div class="flex" ref="mainWrapper">
-    <div class="relative w-6/12 min-w-[350px] shrink-0">
+  <div class="flex h-full" ref="mainWrapper">
+    <div class="relative h-full w-6/12 min-w-[350px] shrink-0">
       <Editor />
       <RunButton />
     </div>

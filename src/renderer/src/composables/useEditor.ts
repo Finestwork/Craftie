@@ -22,11 +22,7 @@ export const init = (editorWrapper: HTMLDivElement) => {
     minimap: {
       enabled: false
     },
-    scrollbar: {
-      vertical: 'hidden',
-      horizontal: 'hidden',
-      handleMouseWheel: false
-    }
+    scrollBeyondLastLine: false
   };
   let myEditor: editor.IStandaloneCodeEditor | null = null;
   editor.defineTheme('ocean', MaterialOcean);
