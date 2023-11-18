@@ -5,32 +5,13 @@ import icon from '../../build/icons/256x256.png?asset';
 import vm from 'vm';
 
 let mainWindow: BrowserWindow | null = null;
-const runCode = async (code: string) => {
-  const sandbox = {
-    console: console
+const runCode = async (browserWindow: BrowserWindow, code: string) => {
+  const context = vm.createContext();
+  context.console = {
+    log: (message) => message
   };
-
-  vm.createContext(sandbox);
-
-  const statements = code
-    .split(';')
-    .map((s) => s.trim())
-    .filter(Boolean);
-
-  statements.forEach((statement) => {
-    const script = new vm.Script(statement);
-    const result = script.runInContext(sandbox);
-
-    // Only print the result if the statement is not a variable declaration or a console.log()
-    if (
-      !statement.startsWith('let ') &&
-      !statement.startsWith('var ') &&
-      !statement.startsWith('const ') &&
-      !statement.startsWith('console.log')
-    ) {
-      console.log(result);
-    }
-  });
+  const result = vm.runInContext(code, context);
+  browserWindow.webContents.send('displayCodeResult', result);
 };
 
 function createWindow(): void {
@@ -113,6 +94,8 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.on('runCode', async (_, code) => {
-  runCode(code);
+ipcMain.on('runCode', async (event, code) => {
+  const browserWindow = BrowserWindow.fromWebContents(event.sender);
+  if (!browserWindow) return;
+  runCode(browserWindow, code);
 });
