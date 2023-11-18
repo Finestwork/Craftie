@@ -4,6 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ['tab-hover']: '#183142',
+        ['tab-foreground']: '#4B526D',
+        ['tab-foreground-hover']: '#40BAEB',
         ['editor-dark']: '#0F111A',
         ['title-bar-dark']: '#090B10',
         ['button-dark']: '#292B35',

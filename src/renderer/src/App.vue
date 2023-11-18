@@ -3,6 +3,7 @@ import TitleBar from '@components/TitleBar.vue';
 import Editor from '@components/Editor.vue';
 import ResultPanel from '@components/ResultPanel.vue';
 import RunButton from '@components/RunButton.vue';
+import TabButtonWrapper from '@components/TabButtonWrapper.vue';
 
 import { nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { useElementBounding } from '@vueuse/core';
@@ -30,11 +31,14 @@ onUnmounted(() => {
 
 <template>
   <TitleBar ref="nav" />
-  <div class="flex h-full" ref="mainWrapper">
-    <div class="relative h-full w-6/12 min-w-[350px] shrink-0">
-      <Editor />
-      <RunButton />
+  <div class="h-full" ref="mainWrapper">
+    <TabButtonWrapper />
+    <div class="flex h-full">
+      <div class="relative h-full w-6/12 min-w-[350px] shrink-0">
+        <Editor />
+        <RunButton />
+      </div>
+      <ResultPanel />
     </div>
-    <ResultPanel />
   </div>
 </template>
