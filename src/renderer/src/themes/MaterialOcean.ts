@@ -1,4 +1,7 @@
-export default {
+import { editor } from 'monaco-editor';
+import IStandaloneThemeData = editor.IStandaloneThemeData;
+
+export default <IStandaloneThemeData>{
   inherit: true,
   base: 'vs-dark',
   colors: {

@@ -3,8 +3,16 @@
   "version": "1.0.0",
   "description": "An Electron application with Vue and TypeScript",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "Finestwork",
   "homepage": "https://www.electronjs.org",
+  "build": {
+    "appId": "com.craftie",
+    "productName": "Craftie",
+    "copyright": "Copyright © 2019 ${author}",
+    "directories":{
+      "buildResources": "build"
+    }
+  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix",

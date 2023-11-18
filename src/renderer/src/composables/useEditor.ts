@@ -4,9 +4,10 @@ import MaterialOcean from '../themes/MaterialOcean';
 import { editor } from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import IStandaloneEditorConstructionOptions = editor.IStandaloneEditorConstructionOptions;
 
 export const init = (editorWrapper: HTMLDivElement) => {
-  const EditorOptions = {
+  const EditorOptions: IStandaloneEditorConstructionOptions = {
     value: '',
     language: 'javascript',
     theme: 'ocean',

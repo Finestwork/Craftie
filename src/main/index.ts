@@ -1,7 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain, screen } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import icon from '../../resources/icon.png?asset';
+import icon from '../../build/icon.png?asset';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -17,13 +17,14 @@ function createWindow(): void {
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
+    title: 'Craftie',
+    icon: icon,
     titleBarOverlay: {
       color: '#090B10',
       symbolColor: '#6A7080',
       height: 32
     },
     center: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -57,7 +58,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron');
+  electronApp.setAppUserModelId('com.craftie');
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
