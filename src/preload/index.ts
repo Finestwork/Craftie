@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 
-ipcRenderer.on('displayCodeResult', async (_, codeResult) => {
+ipcRenderer.on('displayCodeResult', (_, codeResult) => {
   console.log(codeResult);
 });
 
