@@ -1,7 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain, screen } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import icon from '../../build/icon.png?asset';
+import icon from '../../build/icons/256x256.png?asset';
 
 let mainWindow: BrowserWindow | null = null;
 
