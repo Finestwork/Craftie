@@ -8,10 +8,18 @@ let mainWindow: BrowserWindow | null = null;
 const runCode = async (browserWindow: BrowserWindow, code: string) => {
   const context = vm.createContext();
   context.console = {
-    log: (message) => message
+    log: (message) => {
+      if (!context.logMessages) {
+        context.logMessages = [];
+      }
+      context.logMessages.push(message);
+    }
   };
-  const result = vm.runInContext(code, context);
-  browserWindow.webContents.send('displayCodeResult', result);
+
+  vm.runInContext(code, context);
+
+  // Send all log messages to the browser window
+  browserWindow.webContents.send('displayCodeResult', context.logMessages);
 };
 
 function createWindow(): void {
