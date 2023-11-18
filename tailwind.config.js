@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ['editor-dark']: '#0F111A',
         ['title-bar-dark']: '#090B10',
         ['button-dark']: '#292B35',
         ['button-dark-hover']: '#333743',

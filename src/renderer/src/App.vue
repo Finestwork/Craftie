@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TitleBar from '@components/TitleBar.vue';
 import Editor from '@components/Editor.vue';
+import ResultPanel from '@components/ResultPanel.vue';
 import RunButton from '@components/RunButton.vue';
 
 import { nextTick, onMounted, onUnmounted, ref } from 'vue';
@@ -29,8 +30,11 @@ onUnmounted(() => {
 
 <template>
   <TitleBar ref="nav" />
-  <div class="h-screen relative" ref="mainWrapper">
-    <Editor />
-    <RunButton />
+  <div class="flex" ref="mainWrapper">
+    <div class="relative w-6/12 min-w-[350px] shrink-0">
+      <Editor />
+      <RunButton />
+    </div>
+    <ResultPanel />
   </div>
 </template>

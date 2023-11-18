@@ -41,5 +41,18 @@ export const init = (editorWrapper: HTMLDivElement) => {
     }
   };
 
-  return myEditor;
+  const updateLayout = () => {
+    if (myEditor === null) return;
+    myEditor.layout();
+  };
+  const dispose = () => {
+    window.removeEventListener('resize', updateLayout);
+    if (myEditor === null) return;
+    myEditor.dispose();
+  };
+
+  window.addEventListener('resize', updateLayout);
+  return {
+    dispose
+  };
 };
