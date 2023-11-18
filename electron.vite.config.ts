@@ -12,9 +12,9 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
-        '@renderer': resolve(__dirname, 'src/renderer/src'),
-        '@components': resolve(__dirname, 'src/renderer/src/components'),
-        '@composables': resolve(__dirname, 'src/renderer/src/composables')
+        '@renderer': resolve(__dirname, './src/renderer/src'),
+        '@components': resolve(__dirname, './src/renderer/src/components'),
+        '@composables': resolve(__dirname, './src/renderer/src/composables')
       }
     },
     plugins: [vue()]

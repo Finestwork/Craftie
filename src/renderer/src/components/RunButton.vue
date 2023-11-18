@@ -15,8 +15,8 @@ const onClickRunCode = () => {
 </script>
 <template>
   <button
-    class="group absolute right-2 top-0 z-10 flex items-center rounded-md bg-button-dark px-3 py-2 shadow-button-dark-float hover:bg-button-dark-hover hover:shadow-button-dark-float-hover focus:bg-button-dark-hover focus:shadow-button-dark-float-hover"
     ref="runBtn"
+    class="group absolute right-2 top-0 z-10 flex items-center rounded-md bg-button-dark px-3 py-2 shadow-button-dark-float hover:bg-button-dark-hover hover:shadow-button-dark-float-hover focus:bg-button-dark-hover focus:shadow-button-dark-float-hover"
     type="button"
     @click="onClickRunCode"
   >

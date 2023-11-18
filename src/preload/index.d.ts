@@ -1,11 +1,11 @@
-import {ElectronAPI} from '@electron-toolkit/preload'
+import { ElectronAPI } from '@electron-toolkit/preload';
 
 declare global {
   interface Window {
-    electron: ElectronAPI
+    electron: ElectronAPI;
     api: {
-      closeApp: () => void,
-      maximizeApp: () => void
-    }
+      closeApp: () => void;
+      maximizeApp: () => void;
+    };
   }
 }
