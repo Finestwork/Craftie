@@ -21,6 +21,11 @@ export const init = (editorWrapper: HTMLDivElement) => {
     fontLigatures: true,
     minimap: {
       enabled: false
+    },
+    scrollbar: {
+      vertical: 'hidden',
+      horizontal: 'hidden',
+      handleMouseWheel: false
     }
   };
   let myEditor: editor.IStandaloneCodeEditor | null = null;
