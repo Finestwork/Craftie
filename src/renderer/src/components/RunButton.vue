@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import RunButtonIcon from '@components/RunButtonIcon.vue';
+import { useEditorStore } from '@renderer/stores/EditorStore';
 import { bounceAnimation } from '@composables/useButtonAnimation';
 
 // NPM
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 
+const EditorStore = useEditorStore();
 const runBtn: Ref<HTMLButtonElement | null> = ref(null);
 
 const onClickRunCode = () => {
   bounceAnimation(runBtn);
   runBtn?.value?.blur?.();
+  const Code = EditorStore.code;
+  window.api.runCode(Code);
 };
 </script>
+
 <template>
   <button
     ref="runBtn"

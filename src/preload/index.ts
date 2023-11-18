@@ -3,11 +3,8 @@ import { electronAPI } from '@electron-toolkit/preload';
 
 // Custom APIs for renderer
 const api = {
-  closeApp: () => {
-    ipcRenderer.send('closeApp');
-  },
-  maximizeApp: () => {
-    ipcRenderer.send('maximizeApp');
+  runCode: (code: string) => {
+    ipcRenderer.send('runCode', code);
   }
 };
 

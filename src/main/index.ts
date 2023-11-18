@@ -2,8 +2,36 @@ import { app, shell, BrowserWindow, ipcMain, screen } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../build/icons/256x256.png?asset';
+import vm from 'vm';
 
 let mainWindow: BrowserWindow | null = null;
+const runCode = async (code: string) => {
+  const sandbox = {
+    console: console
+  };
+
+  vm.createContext(sandbox);
+
+  const statements = code
+    .split(';')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  statements.forEach((statement) => {
+    const script = new vm.Script(statement);
+    const result = script.runInContext(sandbox);
+
+    // Only print the result if the statement is not a variable declaration or a console.log()
+    if (
+      !statement.startsWith('let ') &&
+      !statement.startsWith('var ') &&
+      !statement.startsWith('const ') &&
+      !statement.startsWith('console.log')
+    ) {
+      console.log(result);
+    }
+  });
+};
 
 function createWindow(): void {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
@@ -85,10 +113,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.on('closeApp', () => {
-  app.quit();
-});
-
-ipcMain.on('maximizeApp', () => {
-  mainWindow?.isMaximized() ? mainWindow?.unmaximize() : mainWindow?.maximize();
+ipcMain.on('runCode', async (_, code) => {
+  runCode(code);
 });

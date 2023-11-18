@@ -1,4 +1,5 @@
 import MaterialOcean from '../themes/MaterialOcean';
+import { useEditorStore } from '@renderer/stores/EditorStore';
 
 // NPM
 import { nextTick, onMounted, onUnmounted, Ref } from 'vue';
@@ -35,10 +36,10 @@ export const init = (editorWrapper: Ref) => {
 
   onMounted(async () => {
     await nextTick();
+    const EditorStore = useEditorStore();
     myEditor = editor.create(editorWrapper.value, EditorOptions);
     myEditor.onDidChangeModelContent(() => {
-      if (myEditor === null) return;
-      // Todo: Store the value
+      EditorStore.code = myEditor.getValue();
     });
 
     window.MonacoEnvironment = {
