@@ -6,14 +6,20 @@ import XCloseIcon from '@components/XCloseIcon.vue';
 import { nextTick, ref } from 'vue';
 import { useElementSize } from '@vueuse/core/index';
 
+const Props = defineProps({
+    isActive: {
+        type: Boolean,
+        required: true
+    }
+});
 const showCloseBtn = ref(false);
 const closeBtn = ref();
 const tabBtnTxt = ref();
 
-const emit = defineEmits(['closeFile']);
-const closeFile = () => {
-    emit('closeFile');
-};
+const emit = defineEmits(['closeFile', 'switchTab']);
+const closeFile = () => emit('closeFile');
+const switchTab = () => emit('switchTab');
+
 const onMouseEnter = async () => {
     showCloseBtn.value = true;
     await nextTick();
@@ -35,9 +41,14 @@ const onMouseLeave = () => {
     <div class="relative" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <button
             ref="tabBtn"
-            class="overflow group flex h-full w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
+            class="overflow group relative flex h-full w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
             type="button"
+            @click="switchTab"
         >
+            <span
+                class="absolute bottom-0 left-0 h-[2px] w-full bg-button-dark-hover"
+                v-if="Props.isActive"
+            ></span>
             <span class="mr-2 block w-[12px]">
                 <JavaScriptIcon
                     class="fill-[#F7DF1E] group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
