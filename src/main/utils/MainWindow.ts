@@ -26,6 +26,7 @@ export const createWindow = () => {
     },
     center: true,
     webPreferences: {
+      nodeIntegration: false,
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }

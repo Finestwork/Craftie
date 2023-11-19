@@ -1,10 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 
-ipcRenderer.on('displayCodeResult', (_, codeResult) => {
-  console.log(codeResult);
-});
-
 // Custom APIs for renderer
 const api = {
   runCode: (code: string) => {
