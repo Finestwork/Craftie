@@ -35,7 +35,9 @@ const onMouseLeave = () => {
             type="button"
         >
             <span class="mr-2 block w-[12px]">
-                <JavaScriptIcon class="fill-[#F7DF1E] group-hover:fill-tab-foreground-hover" />
+                <JavaScriptIcon
+                    class="fill-[#F7DF1E] group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
+                />
             </span>
             <span
                 ref="tabBtnTxt"
