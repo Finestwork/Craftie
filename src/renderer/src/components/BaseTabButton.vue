@@ -3,13 +3,17 @@ import JavaScriptIcon from '@components/JavaScriptIcon.vue';
 import XCloseIcon from '@components/XCloseIcon.vue';
 
 // NPM
-import { nextTick, ref, computed } from 'vue';
+import { nextTick, ref } from 'vue';
 import { useElementSize } from '@vueuse/core/index';
 
 const showCloseBtn = ref(false);
 const closeBtn = ref();
 const tabBtnTxt = ref();
 
+const emit = defineEmits(['closeFile']);
+const closeFile = () => {
+    emit('closeFile');
+};
 const onMouseEnter = async () => {
     showCloseBtn.value = true;
     await nextTick();
@@ -51,6 +55,7 @@ const onMouseLeave = () => {
             class="group absolute right-2 top-1/2 ml-4 block w-[16px] -translate-y-1/2 rounded-full bg-[#777F9E] p-1 hover:bg-tab-foreground-hover focus:bg-tab-foreground-hover"
             :class="{ hidden: !showCloseBtn }"
             type="button"
+            @click="closeFile"
         >
             <XCloseIcon
                 class="stroke-tab-foreground group-hover:stroke-white group-focus:stroke-white"

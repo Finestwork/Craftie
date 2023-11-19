@@ -18,6 +18,10 @@ export const useFileStore = defineStore('fileStore', {
                 content: ''
             };
             this.files.push(File);
+        },
+        deleteFileByIndex(index: number) {
+            console.log(index);
+            this.files.splice(index, 1);
         }
     },
     getters: {

@@ -17,7 +17,11 @@ const FileNames = computed(() => {
 
 <template>
     <div class="flex w-full bg-editor-dark">
-        <TabButton v-for="(name, ind) in FileNames" :key="`${name}${ind}`">
+        <TabButton
+            v-for="(name, ind) in FileNames"
+            :key="`${name}${ind}`"
+            @close-file="FileStore.deleteFileByIndex(ind)"
+        >
             <template #name>{{ name }}</template>
         </TabButton>
         <AddFileButtonIcon @click="FileStore.addNewFile" />
