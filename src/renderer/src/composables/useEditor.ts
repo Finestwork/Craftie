@@ -1,14 +1,13 @@
 import MaterialOcean from '../themes/MaterialOcean';
-import { useEditorStore } from '@renderer/stores/EditorStore';
 
 // NPM
-import { nextTick, onMounted, onUnmounted, Ref } from 'vue';
+import { unref, Ref } from 'vue';
 import { editor } from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import IStandaloneEditorConstructionOptions = editor.IStandaloneEditorConstructionOptions;
 
-export const init = (editorWrapper: Ref) => {
+export const initEditor = () => {
   const EditorOptions: IStandaloneEditorConstructionOptions = {
     value: '',
     language: 'javascript',
@@ -26,22 +25,9 @@ export const init = (editorWrapper: Ref) => {
     },
     scrollBeyondLastLine: false
   };
-  let myEditor: editor.IStandaloneCodeEditor | null = null;
   editor.defineTheme('ocean', MaterialOcean);
-
-  const updateLayout = () => {
-    if (myEditor === null) return;
-    myEditor.layout();
-  };
-
-  onMounted(async () => {
-    await nextTick();
-    const EditorStore = useEditorStore();
-    myEditor = editor.create(editorWrapper.value, EditorOptions);
-    myEditor.onDidChangeModelContent(() => {
-      EditorStore.code = myEditor.getValue();
-    });
-
+  const createEditor = (editorWrapper: Ref<HTMLDivElement>): editor.IStandaloneCodeEditor => {
+    const MyEditor = editor.create(unref(editorWrapper), EditorOptions);
     window.MonacoEnvironment = {
       getWorker(_, label) {
         if (label === 'typescript' || label === 'javascript') {
@@ -51,13 +37,8 @@ export const init = (editorWrapper: Ref) => {
       }
     };
 
-    // Wait for VDom to be updated
-    await nextTick();
-    myEditor.layout();
-    myEditor.focus();
-    window.addEventListener('resize', updateLayout);
-  });
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateLayout);
-  });
+    return MyEditor;
+  };
+
+  return { createEditor };
 };

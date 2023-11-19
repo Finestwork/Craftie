@@ -8,9 +8,7 @@ window.electron.ipcRenderer.on('displayCodeResult', (_, codeResult) => {
 </script>
 
 <template>
-  <div
-    class="h-screen w-6/12 min-w-[350px] shrink-0 bg-editor-dark pl-[10px] text-sm font-semibold font-jb text-white"
-  >
+  <div class="h-screen bg-editor-dark pl-[10px] font-jb text-sm font-semibold text-white">
     <p class="mb-2 last-of-type:mb-0" v-for="code in codeArr" :key="code">
       {{ code }}
     </p>
