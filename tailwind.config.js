@@ -16,6 +16,9 @@ module.exports = {
       boxShadow: {
         ['button-dark-float']: 'inset 0 -3px 0 0 #303340',
         ['button-dark-float-hover']: 'inset 0 -3px 0 0 #124154'
+      },
+      fontFamily: {
+        'jb': ['Jetbrains Mono']
       }
     }
   },
