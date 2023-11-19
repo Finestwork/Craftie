@@ -2,15 +2,26 @@
 import BaseEmptyStateButton from '@components/BaseEmptyStateButton.vue';
 import JavaScriptIcon from '@components/JavaScriptIcon.vue';
 import SassIcon from '@components/SassIcon.vue';
+
+import { useFileStore } from '@renderer/stores/FileStore';
+
+const FileStore = useFileStore();
+const onClickAddNewFile = (type: 'js' | 'sass') => {
+    FileStore.files.push({
+        type: type,
+        fileName: '',
+        content: ''
+    });
+};
 </script>
 
 <template>
     <div class="relative flex h-full items-center justify-center bg-editor-dark">
-        <BaseEmptyStateButton>
+        <BaseEmptyStateButton @click="onClickAddNewFile('js')">
             <JavaScriptIcon />
             <template #tooltip>Create JavaScript File</template>
         </BaseEmptyStateButton>
-        <BaseEmptyStateButton>
+        <BaseEmptyStateButton @click="onClickAddNewFile('sass')">
             <SassIcon />
             <template #tooltip>Create Sass File</template>
         </BaseEmptyStateButton>

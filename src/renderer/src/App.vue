@@ -2,9 +2,13 @@
 import TheTitleBar from '@components/TheTitleBar.vue';
 import TheCodeFiles from '@components/TheCodeFiles.vue';
 import TheEmptyState from '@components/TheEmptyState.vue';
-import { ref } from 'vue';
+import { useFileStore } from '@renderer/stores/FileStore';
 import { useAddPaddingTop } from '@composables/usePaddingHandler';
 
+// NPM
+import { ref } from 'vue';
+
+const FileStore = useFileStore();
 const nav = ref();
 const mainWrapper = ref();
 useAddPaddingTop(mainWrapper, nav);
@@ -13,7 +17,7 @@ useAddPaddingTop(mainWrapper, nav);
 <template>
     <TheTitleBar ref="nav" />
     <div class="h-full" ref="mainWrapper">
-        <TheCodeFiles v-if="else" />
+        <TheCodeFiles v-if="!FileStore.areFilesEmpty" />
         <TheEmptyState v-else />
     </div>
 </template>

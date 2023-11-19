@@ -3,7 +3,7 @@ import JavaScriptIcon from '@components/JavaScriptIcon.vue';
 import XCloseIcon from '@components/XCloseIcon.vue';
 
 // NPM
-import { nextTick, ref } from 'vue';
+import { nextTick, ref, computed } from 'vue';
 import { useElementSize } from '@vueuse/core/index';
 
 const showCloseBtn = ref(false);
@@ -42,8 +42,9 @@ const onMouseLeave = () => {
             <span
                 ref="tabBtnTxt"
                 class="text-sm font-semibold text-tab-foreground group-hover:text-tab-foreground-hover group-focus:text-tab-foreground-hover"
-                >index.js</span
             >
+                <slot name="name"></slot>
+            </span>
         </button>
         <button
             ref="closeBtn"
