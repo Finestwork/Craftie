@@ -31,7 +31,7 @@ const onMouseLeave = () => {
     <div class="relative" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <button
             ref="tabBtn"
-            class="group flex w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
+            class="group flex h-full w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
             type="button"
         >
             <span class="mr-2 block w-[12px]">
