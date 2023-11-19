@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { initEditor } from '@composables/useEditor';
-import { useEditorStore } from '@renderer/stores/EditorStore';
+import { useFileStore } from '@renderer/stores/FileStore';
+
 // NPM
 import { onMounted, ref, nextTick, watch, onUnmounted } from 'vue';
 import { editor } from 'monaco-editor';
@@ -10,7 +11,7 @@ const props = defineProps<{
     trackWidth: number;
 }>();
 
-const EditorStore = useEditorStore();
+const FileStore = useFileStore();
 let monacoEditor: IStandaloneCodeEditor | null = null;
 const editorWrapper = ref();
 const { createEditor } = initEditor();
@@ -27,7 +28,8 @@ onMounted(async () => {
 
     // Attach event listeners
     monacoEditor.onDidChangeModelContent(() => {
-        EditorStore.code = monacoEditor?.getValue?.().trim() ?? '';
+        const Code = monacoEditor?.getValue?.().trim() ?? '';
+        FileStore.updateFileContent(Code);
     });
     window.addEventListener('resize', updateLayoutOnResize);
 });
@@ -43,6 +45,13 @@ watch(
         monacoEditor?.layout?.();
     },
     { flush: 'post' }
+);
+watch(
+    () => FileStore.currentActiveFileInd,
+    () => {
+        const Code = FileStore.getCurrentFileContent;
+        monacoEditor?.setValue(Code);
+    }
 );
 </script>
 

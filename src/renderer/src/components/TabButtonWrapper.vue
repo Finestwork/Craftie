@@ -7,10 +7,7 @@ import { useFileStore } from '@renderer/stores/FileStore';
 import { computed, ref } from 'vue';
 
 const FileStore = useFileStore();
-const CurrentActiveIndex = ref(0);
-const onClickSwitchTab = (ind: number) => {
-    CurrentActiveIndex.value = ind;
-};
+
 const FileNames = computed(() => {
     return FileStore.files.map((file) => {
         const FileName = file.fileName;
@@ -24,9 +21,9 @@ const FileNames = computed(() => {
         <TabButton
             v-for="(name, ind) in FileNames"
             :key="`${name}${ind}`"
-            :is-active="CurrentActiveIndex === ind"
+            :is-active="FileStore.currentActiveFileInd === ind"
             @close-file="FileStore.deleteFileByIndex(ind)"
-            @switch-tab="onClickSwitchTab(ind)"
+            @switch-tab="FileStore.currentActiveFileInd = ind"
         >
             <template #name>{{ name }}</template>
         </TabButton>

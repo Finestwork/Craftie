@@ -8,7 +8,8 @@ type TFile = {
 };
 export const useFileStore = defineStore('fileStore', {
     state: () => ({
-        files: [] as TFile[]
+        files: [] as TFile[],
+        currentActiveFileInd: 0
     }),
     actions: {
         addNewFile(type: TFileType = 'js') {
@@ -20,13 +21,19 @@ export const useFileStore = defineStore('fileStore', {
             this.files.push(File);
         },
         deleteFileByIndex(index: number) {
-            console.log(index);
             this.files.splice(index, 1);
+        },
+        updateFileContent(content: string) {
+            const CurrentIndex = this.currentActiveFileInd;
+            this.files[CurrentIndex].content = content;
         }
     },
     getters: {
         areFilesEmpty(state) {
             return state.files.length === 0;
+        },
+        getCurrentFileContent(state) {
+            return state.files[state.currentActiveFileInd].content;
         }
     }
 });
