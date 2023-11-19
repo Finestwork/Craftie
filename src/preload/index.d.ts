@@ -1,10 +1,10 @@
 import { ElectronAPI } from '@electron-toolkit/preload';
 
 declare global {
-  interface Window {
-    electron: ElectronAPI;
-    api: {
-      runCode: ()=>void
-    };
-  }
+    interface Window {
+        electron: ElectronAPI;
+        api: {
+            runCode: () => void;
+        };
+    }
 }

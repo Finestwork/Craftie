@@ -7,7 +7,7 @@ import { editor } from 'monaco-editor';
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 
 const props = defineProps<{
-  trackWidth: number;
+    trackWidth: number;
 }>();
 
 const EditorStore = useEditorStore();
@@ -16,36 +16,36 @@ const editorWrapper = ref();
 const { createEditor } = initEditor();
 
 const updateLayoutOnResize = () => {
-  monacoEditor?.layout();
+    monacoEditor?.layout();
 };
 
 onMounted(async () => {
-  await nextTick();
-  monacoEditor = createEditor(editorWrapper);
-  monacoEditor.layout();
-  monacoEditor.focus();
+    await nextTick();
+    monacoEditor = createEditor(editorWrapper);
+    monacoEditor.layout();
+    monacoEditor.focus();
 
-  // Attach event listeners
-  monacoEditor.onDidChangeModelContent(() => {
-    EditorStore.code = monacoEditor?.getValue?.().trim() ?? '';
-  });
-  window.addEventListener('resize', updateLayoutOnResize);
+    // Attach event listeners
+    monacoEditor.onDidChangeModelContent(() => {
+        EditorStore.code = monacoEditor?.getValue?.().trim() ?? '';
+    });
+    window.addEventListener('resize', updateLayoutOnResize);
 });
 
 onUnmounted(() => {
-  monacoEditor?.dispose();
-  window.removeEventListener('resize', updateLayoutOnResize);
+    monacoEditor?.dispose();
+    window.removeEventListener('resize', updateLayoutOnResize);
 });
 
 watch(
-  () => props.trackWidth,
-  () => {
-    monacoEditor?.layout?.();
-  },
-  { flush: 'post' }
+    () => props.trackWidth,
+    () => {
+        monacoEditor?.layout?.();
+    },
+    { flush: 'post' }
 );
 </script>
 
 <template>
-  <div ref="editorWrapper" class="h-full w-full"></div>
+    <div ref="editorWrapper" class="h-full w-full"></div>
 </template>
