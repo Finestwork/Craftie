@@ -31,7 +31,7 @@ const onMouseLeave = () => {
     <div class="relative" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <button
             ref="tabBtn"
-            class="group flex h-full w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
+            class="overflow group flex h-full w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
             type="button"
         >
             <span class="mr-2 block w-[12px]">
@@ -41,7 +41,7 @@ const onMouseLeave = () => {
             </span>
             <span
                 ref="tabBtnTxt"
-                class="text-sm font-semibold text-tab-foreground group-hover:text-tab-foreground-hover group-focus:text-tab-foreground-hover"
+                class="truncate text-sm font-semibold text-tab-foreground group-hover:text-tab-foreground-hover group-focus:text-tab-foreground-hover"
             >
                 <slot name="name"></slot>
             </span>
