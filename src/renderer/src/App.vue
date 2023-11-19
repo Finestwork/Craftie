@@ -5,28 +5,14 @@ import ResultPanel from '@components/ResultPanel.vue';
 import RunButton from '@components/RunButton.vue';
 import TabButtonWrapper from '@components/TabButtonWrapper.vue';
 
-import { nextTick, onMounted, onUnmounted, ref } from 'vue';
-import { useElementBounding } from '@vueuse/core';
+import { useAddPaddingTop } from './composables/usePaddingHandler';
 
-const nav = ref(null);
-const mainWrapper = ref(null);
-const addPadding = () => {
-  if (mainWrapper.value === null) return;
-  const { height } = useElementBounding(nav);
-  const MainWrapper = <HTMLDivElement>mainWrapper.value;
-  const Height = height.value;
-  Object.assign(MainWrapper.style, {
-    paddingTop: `${Height}px`
-  });
-};
-onMounted(async () => {
-  await nextTick();
-  addPadding();
-  window.addEventListener('resize', addPadding);
-});
-onUnmounted(() => {
-  window.removeEventListener('resize', addPadding);
-});
+import { ref } from 'vue';
+
+const nav = ref();
+const mainWrapper = ref();
+useAddPaddingTop(mainWrapper, nav);
+
 </script>
 
 <template>
