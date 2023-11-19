@@ -6,22 +6,15 @@ import SassIcon from '@components/SassIcon.vue';
 import { useFileStore } from '@renderer/stores/FileStore';
 
 const FileStore = useFileStore();
-const onClickAddNewFile = (type: 'js' | 'sass') => {
-    FileStore.files.push({
-        type: type,
-        fileName: '',
-        content: ''
-    });
-};
 </script>
 
 <template>
     <div class="relative flex h-full items-center justify-center bg-editor-dark">
-        <BaseEmptyStateButton @click="onClickAddNewFile('js')">
+        <BaseEmptyStateButton @click="FileStore.addNewFile">
             <JavaScriptIcon />
             <template #tooltip>Create JavaScript File</template>
         </BaseEmptyStateButton>
-        <BaseEmptyStateButton @click="onClickAddNewFile('sass')">
+        <BaseEmptyStateButton @click="FileStore.addNewFile('sass')">
             <SassIcon />
             <template #tooltip>Create Sass File</template>
         </BaseEmptyStateButton>

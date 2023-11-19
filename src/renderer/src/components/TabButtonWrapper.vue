@@ -20,6 +20,6 @@ const FileNames = computed(() => {
         <TabButton v-for="(name, ind) in FileNames" :key="`${name}${ind}`">
             <template #name>{{ name }}</template>
         </TabButton>
-        <AddFileButtonIcon />
+        <AddFileButtonIcon @click="FileStore.addNewFile" />
     </div>
 </template>
