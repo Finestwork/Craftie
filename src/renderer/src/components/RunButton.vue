@@ -4,11 +4,18 @@ import { useFileStore } from '@renderer/stores/FileStore';
 import { bounceAnimation } from '@composables/useButtonAnimation';
 
 // NPM
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { Ref } from 'vue';
 
 const FileStore = useFileStore();
 const runBtn: Ref<HTMLButtonElement | null> = ref(null);
+
+onMounted(() => {
+    window.electron.ipcRenderer.on('onShortcutKeyRunCode', () => {
+        const Code = FileStore.getCurrentFileContent;
+        window.api.runCode(Code);
+    });
+});
 
 const onClickRunCode = () => {
     bounceAnimation(runBtn);

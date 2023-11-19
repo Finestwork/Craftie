@@ -3,7 +3,7 @@ import { join } from 'path';
 import { is } from '@electron-toolkit/utils';
 import icon from '../../../build/icons/256x256.png?asset';
 
-export const createWindow = () => {
+export const createWindow = (): BrowserWindow => {
     let mainWindow: BrowserWindow | null = null;
 
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;

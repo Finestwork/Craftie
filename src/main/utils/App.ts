@@ -1,7 +1,7 @@
-import { app } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcRenderer } from 'electron';
 import { electronApp, optimizer } from '@electron-toolkit/utils';
 
-export const createApp = (createWindow: () => void) => {
+export const createApp = (createWindow: () => BrowserWindow) => {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
@@ -16,12 +16,17 @@ export const createApp = (createWindow: () => void) => {
             optimizer.watchWindowShortcuts(window);
         });
 
-        createWindow();
+        const MainWindow = createWindow();
 
         app.on('activate', function () {
             // On macOS it's common to re-create a window in the app when the
             // dock icon is clicked and there are no other windows open.
             if (BrowserWindow.getAllWindows().length === 0) createWindow();
+        });
+
+        // Add keyboard shortcuts
+        globalShortcut.register('Alt+Enter', () => {
+            MainWindow.webContents.send('onShortcutKeyRunCode');
         });
     });
 
