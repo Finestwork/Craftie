@@ -1,12 +1,22 @@
+<script setup lang="ts">
+import SlideupToolTip from '@components/SlideupToolTip.vue';
+</script>
 <template>
-    <button
-        class="group mr-5 h-[50px] w-[70px] rounded-md bg-[#292D40] p-2 hover:bg-tab-hover focus:bg-tab-hover"
-        type="button"
-    >
-        <span
-            class="fill-[#5E668D] group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
+    <SlideupToolTip>
+        <button
+            class="group mr-5 h-[50px] w-[70px] rounded-md bg-[#292D40] p-2 hover:bg-tab-hover focus:bg-tab-hover"
+            ref="reference"
+            type="button"
         >
-            <slot></slot>
-        </span>
-    </button>
+            <span
+                class="fill-[#5E668D] group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
+            >
+                <slot></slot>
+            </span>
+        </button>
+
+        <template #tooltip>
+            <slot name="tooltip"></slot>
+        </template>
+    </SlideupToolTip>
 </template>

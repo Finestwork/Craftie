@@ -8,9 +8,11 @@ import SassIcon from '@components/SassIcon.vue';
     <div class="relative flex h-full items-center justify-center bg-editor-dark">
         <BaseEmptyStateButton>
             <JavaScriptIcon />
+            <template #tooltip>Create JavaScript File</template>
         </BaseEmptyStateButton>
         <BaseEmptyStateButton>
             <SassIcon />
+            <template #tooltip>Create Sass File</template>
         </BaseEmptyStateButton>
 
         <p
