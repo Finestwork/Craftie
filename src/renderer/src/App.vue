@@ -33,11 +33,12 @@ onUnmounted(() => {
   <TitleBar ref="nav" />
   <div class="h-full" ref="mainWrapper">
     <TabButtonWrapper />
-    <div class="flex h-full">
+    <div class="flex relative h-full">
       <div class="relative h-full w-6/12 min-w-[350px] shrink-0">
         <Editor />
         <RunButton />
       </div>
+      <span class="block absolute h-full w-[1.5px] left-1/2 bg-button-dark cursor-col-resize"></span>
       <ResultPanel />
     </div>
   </div>
