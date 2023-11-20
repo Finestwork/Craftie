@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import BaseTabButton from '@components/BaseTabButton.vue';
 import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
+import TabButtonDropdown from '@components/TabButtonDropdown.vue';
+
+// Store
 import { useFileStore } from '@renderer/stores/FileStore';
 
 // NPM
@@ -9,6 +12,7 @@ import { Splide, SplideSlide } from '@splidejs/vue-splide';
 
 const FileStore = useFileStore();
 const splide = ref();
+const dropdown = ref();
 const SplideOptions = {
     controls: false,
     arrows: false,
@@ -17,6 +21,15 @@ const SplideOptions = {
     pagination: false,
     live: false
 };
+const FileNames = computed(() => {
+    return FileStore.files.map((file) => {
+        const FileName = file.fileName;
+        return {
+            name: FileName.trim() === '' ? 'Unsaved Work' : FileName,
+            type: file.type
+        };
+    });
+});
 
 onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutSwitchTabLeft', () => {
@@ -30,16 +43,6 @@ onMounted(() => {
         FileStore.switchActiveFileInd('inc');
     });
 });
-const FileNames = computed(() => {
-    return FileStore.files.map((file) => {
-        const FileName = file.fileName;
-        return {
-            name: FileName.trim() === '' ? 'Unsaved Work' : FileName,
-            type: file.type
-        };
-    });
-});
-
 watch(
     () => FileStore.currentActiveFileInd,
     (value: number) => {
@@ -67,6 +70,10 @@ watch(
                 <AddFileButtonIcon @click="FileStore.addNewFile('js')" />
             </SplideSlide>
         </Splide>
+
+        <Teleport to="body">
+            <TabButtonDropdown ref="dropdown" />
+        </Teleport>
     </div>
 </template>
 
