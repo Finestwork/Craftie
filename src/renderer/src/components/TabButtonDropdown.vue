@@ -23,7 +23,6 @@ const onClickAddScss = () => {
 <template>
     <div class="overflow-hidden rounded-md bg-button-dark shadow-xl">
         <TabButtonDropdownItem @click="onClickAddJavaScript"> JavaScript</TabButtonDropdownItem>
-        <TabButtonDropdownItem @click="onClickAddSass"> Sass</TabButtonDropdownItem>
         <TabButtonDropdownItem @click="onClickAddScss"> Scss</TabButtonDropdownItem>
     </div>
 </template>
