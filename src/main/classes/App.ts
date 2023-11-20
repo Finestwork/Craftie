@@ -1,6 +1,7 @@
 import { app, BrowserWindow, globalShortcut, ipcRenderer } from 'electron';
 import { electronApp, optimizer } from '@electron-toolkit/utils';
 import MainWindow from './MainWindow';
+import KeyboardShortcuts from './KeyboardShortcuts';
 
 export default class App {
     /**
@@ -34,13 +35,11 @@ export default class App {
             app.on('activate', function () {
                 // On macOS it's common to re-create a window in the app when the
                 // dock icon is clicked and there are no other windows open.
-                if (BrowserWindow.getAllWindows().length === 0) createWindow();
+                if (BrowserWindow.getAllWindows().length === 0) this.mainWindow.createWindow();
             });
 
             // Add keyboard shortcuts
-            globalShortcut.register('Alt+Enter', () => {
-                this.mainWindow.mainWindow.webContents.send('onShortcutKeyRunCode');
-            });
+            new KeyboardShortcuts(this.mainWindow);
         });
     }
 
