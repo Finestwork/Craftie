@@ -9,8 +9,13 @@ window.electron.ipcRenderer.on('displayCodeResult', (_, codeResult) => {
 
 <template>
     <div class="h-full bg-editor-dark pl-[10px] font-jb text-sm font-semibold text-white">
-        <p v-for="(code, ind) in codeArr" :key="`${code}${ind}`" class="mb-2 last-of-type:mb-0">
-            {{ code }}
-        </p>
+        <template v-if="Array.isArray(codeArr)">
+            <p v-for="(code, ind) in codeArr" :key="`${code}${ind}`" class="mb-2 last-of-type:mb-0">
+                {{ code }}
+            </p>
+        </template>
+        <template v-else>
+            <pre>{{ codeArr }}</pre>
+        </template>
     </div>
 </template>

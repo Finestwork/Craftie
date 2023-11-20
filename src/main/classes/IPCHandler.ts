@@ -2,6 +2,7 @@ import { BrowserWindow, ipcMain, dialog } from 'electron';
 import { basename } from 'path';
 import vm from 'vm';
 import { writeFile } from 'fs/promises';
+import sass from 'sass';
 import { getSaveDialogOptions } from '@helpers/FileStoreHelper';
 
 export default class IPCHandler {
@@ -20,10 +21,7 @@ export default class IPCHandler {
      * @private
      */
     private runCode() {
-        ipcMain.on('runCode', async (event, code) => {
-            const browserWindow = BrowserWindow.fromWebContents(event.sender);
-            if (!browserWindow) return;
-
+        const runJavaScript = (browserWindow: BrowserWindow, code) => {
             const context = vm.createContext();
             context.console = {
                 log: (message) => {
@@ -35,8 +33,28 @@ export default class IPCHandler {
             };
             vm.runInContext(code, context);
 
-            // Send all log messages to the browser window
+            // Send code the renderer process
             browserWindow.webContents.send('displayCodeResult', context.logMessages);
+        };
+
+        const runSass = (browserWindow: BrowserWindow, code) => {
+            const Result = sass.compileString(code);
+            // Send code the renderer process
+            browserWindow.webContents.send('displayCodeResult', Result.css);
+        };
+        ipcMain.on('runCode', async (event, type: string, code: string) => {
+            const browserWindow = BrowserWindow.fromWebContents(event.sender);
+            if (!browserWindow) return;
+
+            switch (type) {
+                case 'js':
+                    runJavaScript(browserWindow, code);
+                    break;
+                case 'sass':
+                case 'scss':
+                    runSass(browserWindow, code);
+                    break;
+            }
         });
     }
 

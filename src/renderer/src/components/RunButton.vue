@@ -12,16 +12,16 @@ const runBtn: Ref<HTMLButtonElement | null> = ref(null);
 
 onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutKeyRunCode', () => {
-        const Code = FileStore.getCurrentFileContent;
-        window.api.runCode(Code);
+        const File = FileStore.getCurrentFile;
+        window.api.runCode(File.type, File.content);
     });
 });
 
 const onClickRunCode = () => {
     bounceAnimation(runBtn);
     runBtn?.value?.blur?.();
-    const Code = FileStore.getCurrentFileContent;
-    window.api.runCode(Code);
+    const File = FileStore.getCurrentFile;
+    window.api.runCode(File.type, File.content);
 };
 </script>
 
