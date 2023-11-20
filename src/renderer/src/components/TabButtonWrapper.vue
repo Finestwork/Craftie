@@ -20,9 +20,13 @@ const SplideOptions = {
 
 onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutSwitchTabLeft', () => {
+        const ActiveElement = <HTMLElement>document.activeElement;
+        ActiveElement?.blur?.();
         FileStore.switchActiveFileInd('dec');
     });
     window.electron.ipcRenderer.on('onShortcutSwitchTabRight', () => {
+        const ActiveElement = <HTMLElement>document.activeElement;
+        ActiveElement?.blur?.();
         FileStore.switchActiveFileInd('inc');
     });
 });
