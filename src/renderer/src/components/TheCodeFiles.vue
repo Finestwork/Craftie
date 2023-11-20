@@ -4,10 +4,12 @@ import ResultPanel from '@components/ResultPanel.vue';
 import RunButton from '@components/RunButton.vue';
 import TabButtonWrapper from '@components/TabButtonWrapper.vue';
 
+import { useFileStore } from '@renderer/stores/FileStore';
 import { useResizePanel } from '@composables/useResizePanel';
 
 import { onMounted, onUnmounted, ref } from 'vue';
 
+const FileStore = useFileStore();
 const divider = ref();
 const {
     onMouseUpStopResize,
@@ -19,6 +21,11 @@ const {
 } = useResizePanel(divider);
 
 onMounted(() => {
+    // Save the file
+    window.electron.ipcRenderer.on('onShortcutSaveFile', () => {
+        const Code = FileStore.getCurrentFileContent;
+        window.api.saveFile(Code);
+    });
     // Divider initial position
     Object.assign(divider.value.style, {
         left: `leftPanelWidth`

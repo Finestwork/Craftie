@@ -3,8 +3,11 @@ import { electronAPI } from '@electron-toolkit/preload';
 
 // Custom APIs for renderer
 const api = {
-    runCode: (code: string) => {
+    runCode(code: string) {
         ipcRenderer.send('runCode', code);
+    },
+    saveFile(code: string) {
+        ipcRenderer.send('saveFile', code);
     }
 };
 

@@ -10,6 +10,7 @@ export default class KeyboardShortcuts {
     constructor(private mainWindow: MainWindow) {
         this.runCode();
         this.switchTab();
+        this.onClickSaveFile();
     }
 
     /**
@@ -32,6 +33,16 @@ export default class KeyboardShortcuts {
         });
         globalShortcut.register('Alt+Right', () => {
             this.mainWindow.mainWindow.webContents.send('onShortcutSwitchTabRight');
+        });
+    }
+
+    /**
+     * Sends a message to the renderer that it needs to save the file.
+     * @private
+     */
+    private onClickSaveFile() {
+        globalShortcut.register('CmdOrCtrl+S', () => {
+            this.mainWindow.mainWindow.webContents.send('onShortcutSaveFile');
         });
     }
 }

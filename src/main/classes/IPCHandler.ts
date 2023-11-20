@@ -1,5 +1,6 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, ipcMain, dialog } from 'electron';
 import vm from 'vm';
+import { writeFile } from 'fs/promises';
 
 export default class IPCHandler {
     /**
@@ -8,6 +9,7 @@ export default class IPCHandler {
      */
     constructor() {
         this.runCode();
+        this.saveFile();
     }
 
     /**
@@ -33,6 +35,29 @@ export default class IPCHandler {
 
             // Send all log messages to the browser window
             browserWindow.webContents.send('displayCodeResult', context.logMessages);
+        });
+    }
+
+    private saveFile(code: string) {
+        ipcMain.on('saveFile', async (event, code) => {
+            const CurrentBrowserWindow = BrowserWindow.fromWebContents(event.sender);
+            if (!CurrentBrowserWindow) return;
+
+            /**
+             * TODO:
+             * Make file name dynamic
+             * Make extension dynamic
+             */
+            const DialogOptions = {
+                title: 'Export JavaScript',
+                filters: [{ name: 'JavaScript', extensions: ['js'] }]
+            };
+
+            const result = await dialog.showSaveDialog(CurrentBrowserWindow, DialogOptions);
+            if (result.canceled) return;
+
+            const { filePath } = result;
+            await writeFile(<string>filePath, code, { encoding: 'utf-8' });
         });
     }
 }
