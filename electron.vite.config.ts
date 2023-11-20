@@ -4,6 +4,11 @@ import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
     main: {
+        resolve: {
+            alias: {
+                '@helpers': resolve(__dirname, './src/Helpers')
+            }
+        },
         plugins: [externalizeDepsPlugin()]
     },
     preload: {
@@ -14,7 +19,8 @@ export default defineConfig({
             alias: {
                 '@renderer': resolve(__dirname, './src/renderer/src'),
                 '@components': resolve(__dirname, './src/renderer/src/components'),
-                '@composables': resolve(__dirname, './src/renderer/src/composables')
+                '@composables': resolve(__dirname, './src/renderer/src/composables'),
+                '@helpers': resolve(__dirname, './src/Helpers')
             }
         },
         plugins: [vue()]

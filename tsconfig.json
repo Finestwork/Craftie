@@ -15,9 +15,12 @@
       "@components/*": [
         "src/renderer/src/components/*"
       ],
-      "@composables/*": [
-        "src/renderer/src/composables/*"
-      ]
+        "@composables/*": [
+            "src/renderer/src/composables/*"
+        ],
+        "@helpers/*": [
+            "src/Helpers/*"
+        ]
     }
   },
   "references": [

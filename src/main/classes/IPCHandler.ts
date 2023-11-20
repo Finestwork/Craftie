@@ -1,6 +1,7 @@
 import { BrowserWindow, ipcMain, dialog } from 'electron';
 import vm from 'vm';
 import { writeFile } from 'fs/promises';
+import { getSaveDialogOptions } from '@helpers/FileStoreHelper';
 
 export default class IPCHandler {
     /**
@@ -39,19 +40,11 @@ export default class IPCHandler {
     }
 
     private saveFile() {
-        ipcMain.on('saveFile', async (event, code) => {
+        ipcMain.on('saveFile', async (event, type, code) => {
             const CurrentBrowserWindow = BrowserWindow.fromWebContents(event.sender);
             if (!CurrentBrowserWindow) return;
 
-            /**
-             * TODO:
-             * Make file name dynamic
-             * Make extension dynamic
-             */
-            const DialogOptions = {
-                title: 'Export JavaScript',
-                filters: [{ name: 'JavaScript', extensions: ['js'] }]
-            };
+            const DialogOptions = getSaveDialogOptions(type);
 
             const result = await dialog.showSaveDialog(CurrentBrowserWindow, DialogOptions);
             if (result.canceled) return;

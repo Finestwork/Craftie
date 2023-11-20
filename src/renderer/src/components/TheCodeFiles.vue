@@ -23,10 +23,10 @@ const {
 onMounted(() => {
     // Save the file
     window.electron.ipcRenderer.on('onShortcutSaveFile', () => {
-        const Code = FileStore.getCurrentFileContent;
-        window.api.saveFile(Code);
+        const File = FileStore.getCurrentFile;
+        window.api.saveFile(File.type, File.content);
     });
-    // Divider initial position
+    // Divider's initial position
     Object.assign(divider.value.style, {
         left: `leftPanelWidth`
     });

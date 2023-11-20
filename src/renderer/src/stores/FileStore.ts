@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia';
 
-type TFileType = 'js' | 'sass';
+type TFileType = 'js' | 'sass' | 'scss';
 type TFile = {
     type: TFileType;
     fileName: string;
     content: string;
+    filePath: string;
 };
 export const useFileStore = defineStore('fileStore', {
     state: () => ({
@@ -52,6 +53,9 @@ export const useFileStore = defineStore('fileStore', {
         },
         getCurrentFileContent(state) {
             return state.files[state.currentActiveFileInd].content;
+        },
+        getCurrentFile(state) {
+            return state.files[state.currentActiveFileInd];
         }
     }
 });

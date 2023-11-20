@@ -6,8 +6,8 @@ const api = {
     runCode(code: string) {
         ipcRenderer.send('runCode', code);
     },
-    saveFile(code: string) {
-        ipcRenderer.send('saveFile', code);
+    saveFile(type: string, code: string) {
+        ipcRenderer.send('saveFile', type, code);
     }
 };
 

@@ -10,7 +10,7 @@ const FileStore = useFileStore();
 
 <template>
     <div class="relative flex h-full items-center justify-center bg-editor-dark">
-        <BaseEmptyStateButton @click="FileStore.addNewFile">
+        <BaseEmptyStateButton @click="FileStore.addNewFile('js')">
             <JavaScriptIcon />
             <template #tooltip>Create JavaScript File</template>
         </BaseEmptyStateButton>
