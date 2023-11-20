@@ -26,6 +26,24 @@ export const useFileStore = defineStore('fileStore', {
         updateFileContent(content: string) {
             const CurrentIndex = this.currentActiveFileInd;
             this.files[CurrentIndex].content = content;
+        },
+        switchActiveFileInd(operation: 'inc' | 'dec' = 'inc') {
+            const CurrentFileLength = this.files.length - 1;
+            if (operation === 'dec') {
+                if (this.currentActiveFileInd === 0) {
+                    this.currentActiveFileInd = CurrentFileLength;
+                    return;
+                }
+                this.currentActiveFileInd--;
+                return;
+            }
+
+            if (this.currentActiveFileInd === CurrentFileLength) {
+                this.currentActiveFileInd = 0;
+                return;
+            }
+
+            this.currentActiveFileInd++;
         }
     },
     getters: {

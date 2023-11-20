@@ -4,10 +4,18 @@ import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
 import { useFileStore } from '@renderer/stores/FileStore';
 
 // NPM
-import { computed, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const FileStore = useFileStore();
 
+onMounted(() => {
+    window.electron.ipcRenderer.on('onShortcutSwitchTabLeft', () => {
+        FileStore.switchActiveFileInd('dec');
+    });
+    window.electron.ipcRenderer.on('onShortcutSwitchTabRight', () => {
+        FileStore.switchActiveFileInd('inc');
+    });
+});
 const FileNames = computed(() => {
     return FileStore.files.map((file) => {
         const FileName = file.fileName;

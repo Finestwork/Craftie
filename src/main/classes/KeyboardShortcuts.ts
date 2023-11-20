@@ -9,6 +9,7 @@ export default class KeyboardShortcuts {
      */
     constructor(private mainWindow: MainWindow) {
         this.runCode();
+        this.switchTab();
     }
 
     /**
@@ -18,6 +19,19 @@ export default class KeyboardShortcuts {
     private runCode() {
         globalShortcut.register('Alt+Enter', () => {
             this.mainWindow.mainWindow.webContents.send('onShortcutKeyRunCode');
+        });
+    }
+
+    /**
+     * Switch tab when left/right arrow + alt key is pressed.
+     * @private
+     */
+    private switchTab() {
+        globalShortcut.register('Alt+Left', () => {
+            this.mainWindow.mainWindow.webContents.send('onShortcutSwitchTabLeft');
+        });
+        globalShortcut.register('Alt+Right', () => {
+            this.mainWindow.mainWindow.webContents.send('onShortcutSwitchTabRight');
         });
     }
 }
