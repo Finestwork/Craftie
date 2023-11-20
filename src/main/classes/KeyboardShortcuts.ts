@@ -61,5 +61,8 @@ export default class KeyboardShortcuts {
         globalShortcut.register('CmdOrCtrl+t', () => {
             this.mainWindow.mainWindow.webContents.send('onShortcutOpenTabDropdown');
         });
+        globalShortcut.register('Escape', () => {
+            this.mainWindow.mainWindow.webContents.send('onShortcutCloseTabDropdown');
+        });
     }
 }

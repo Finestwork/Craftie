@@ -17,6 +17,9 @@ onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutOpenTabDropdown', () => {
         showDropdown.value = true;
     });
+    window.electron.ipcRenderer.on('onShortcutCloseTabDropdown', () => {
+        showDropdown.value = false;
+    });
 });
 
 onClickOutside(target, () => {
