@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import anime from 'animejs/lib/anime';
-import { computePosition } from '@floating-ui/dom';
+import { computePosition, shift } from '@floating-ui/dom';
 import { ref } from 'vue';
 
-const displayTooltip = ref(false);
 const reference = ref();
-const floating = ref();
+const floatingEl = ref();
 
+const Props = defineProps({
+    show: {
+        type: Boolean,
+        required: true
+    }
+});
 const onBeforeEnter = (el) => {
-    computePosition(reference.value, el).then(({ x, y }) => {
+    const Middlewares = [shift()];
+    computePosition(reference.value, el, { middleware: Middlewares }).then(({ x, y }) => {
         Object.assign(el.style, {
             left: `${x}px`,
             top: `${y + 16}px`,
@@ -38,12 +44,12 @@ const onLeave = (el, done) => {
 };
 </script>
 <template>
-    <div ref="reference" @mouseenter="displayTooltip = true" @mouseleave="displayTooltip = false">
+    <div class="relative" ref="reference">
         <slot></slot>
 
         <Teleport to="body">
             <Transition @before-enter="onBeforeEnter" @leave="onLeave">
-                <div class="absolute" ref="floating" v-if="displayTooltip">
+                <div class="absolute z-50" ref="floatingEl" v-if="Props.show">
                     <slot name="float"></slot>
                 </div>
             </Transition>

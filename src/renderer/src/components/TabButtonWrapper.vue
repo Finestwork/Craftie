@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BaseTabButton from '@components/BaseTabButton.vue';
-import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
-import TabButtonDropdown from '@components/TabButtonDropdown.vue';
+import AddFileTabButton from '@components/AddFileTabButton.vue';
 
 // Store
 import { useFileStore } from '@renderer/stores/FileStore';
@@ -67,13 +66,9 @@ watch(
                 </BaseTabButton>
             </SplideSlide>
             <SplideSlide>
-                <AddFileButtonIcon @click="FileStore.addNewFile('js')" />
+                <AddFileTabButton />
             </SplideSlide>
         </Splide>
-
-        <Teleport to="body">
-            <TabButtonDropdown ref="dropdown" />
-        </Teleport>
     </div>
 </template>
 
