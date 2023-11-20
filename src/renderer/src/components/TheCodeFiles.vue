@@ -24,6 +24,11 @@ onMounted(() => {
     // Save the file
     window.electron.ipcRenderer.on('onShortcutSaveFile', () => {
         const File = FileStore.getCurrentFile;
+        console.log(File.content.trim());
+        // Only save file if contents are not empty
+        if (File.content.trim() === '') {
+            return;
+        }
         window.api.saveFile(File.type, File.content);
     });
 
