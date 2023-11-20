@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import BaseFloatUp from '@components/BaseFloatUp.vue';
+import BaseTooltipFloatUp from '@components/BaseTooltipFloatUp.vue';
 </script>
 <template>
-    <BaseFloatUp>
+    <BaseTooltipFloatUp>
         <template #default>
             <slot></slot>
         </template>
@@ -14,5 +14,5 @@ import BaseFloatUp from '@components/BaseFloatUp.vue';
                 <slot name="tooltip"></slot>
             </span>
         </template>
-    </BaseFloatUp>
+    </BaseTooltipFloatUp>
 </template>
