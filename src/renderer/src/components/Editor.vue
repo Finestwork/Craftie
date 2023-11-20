@@ -20,11 +20,19 @@ const updateLayoutOnResize = () => {
     monacoEditor?.layout();
 };
 
+const setEditorLanguage = () => {
+    const File = FileStore.getCurrentFile;
+    const Language = File.type === 'scss' ? 'scss' : File.type === 'js' ? 'javascript' : '';
+    const Model = editor.createModel('', Language);
+    monacoEditor?.setModel(Model);
+};
+
 onMounted(async () => {
     await nextTick();
     monacoEditor = createEditor(editorWrapper);
     monacoEditor.layout();
     monacoEditor.focus();
+    setEditorLanguage();
 
     // Attach event listeners
     monacoEditor.onDidChangeModelContent(() => {
@@ -49,8 +57,9 @@ watch(
 watch(
     () => FileStore.currentActiveFileInd,
     () => {
-        const Code = FileStore.getCurrentFileContent;
-        monacoEditor?.setValue(Code);
+        const File = FileStore.getCurrentFile;
+        monacoEditor?.setValue(File.content);
+        setEditorLanguage();
     }
 );
 </script>

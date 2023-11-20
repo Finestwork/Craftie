@@ -20,7 +20,6 @@ watch(
     () => showDropdown.value,
     async (isActive) => {
         await nextTick();
-        console.log(isActive, tabButtonDropdown.value);
         if (isActive) activate();
         else deactivate();
     },

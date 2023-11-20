@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-type TFileType = 'js' | 'sass' | 'scss';
+type TFileType = 'js' | 'scss';
 type TFile = {
     type: TFileType;
     fileName: string;

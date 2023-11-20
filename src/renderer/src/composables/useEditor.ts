@@ -5,12 +5,12 @@ import { unref, Ref } from 'vue';
 import { editor } from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import IStandaloneEditorConstructionOptions = editor.IStandaloneEditorConstructionOptions;
 
 export const initEditor = () => {
     const EditorOptions: IStandaloneEditorConstructionOptions = {
         value: '',
-        language: 'javascript',
         theme: 'ocean',
         fontSize: 16,
         fontFamily: 'JetBrains Mono',
@@ -32,6 +32,8 @@ export const initEditor = () => {
             getWorker(_, label) {
                 if (label === 'typescript' || label === 'javascript') {
                     return new TypescriptWorker();
+                } else if (label === 'css' || label === 'scss') {
+                    return CssWorker();
                 }
                 return new EditorWorker();
             }
