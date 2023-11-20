@@ -16,7 +16,7 @@ const FileStore = useFileStore();
         </BaseEmptyStateButton>
         <BaseEmptyStateButton @click="FileStore.addNewFile('scss')">
             <SassIcon />
-            <template #tooltip>Create Sass File</template>
+            <template #tooltip>Create Scss File</template>
         </BaseEmptyStateButton>
 
         <p
