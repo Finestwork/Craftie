@@ -10,12 +10,12 @@ window.electron.ipcRenderer.on('displayCodeResult', (_, codeResult) => {
 </script>
 
 <template>
-    <div class="h-full bg-editor-dark pl-[10px] font-jb text-sm font-semibold text-white">
-        <template v-if="Array.isArray(codeArr)">
+    <div class="scrollbar h-full bg-editor-dark pl-[10px] font-jb text-sm font-semibold text-white">
+        <div class="h-full overflow-y-scroll pb-4" v-if="Array.isArray(codeArr)">
             <p v-for="(code, ind) in codeArr" :key="`${code}${ind}`" class="mb-2 last-of-type:mb-0">
                 {{ code }}
             </p>
-        </template>
+        </div>
         <template v-else>
             <ScssResult :code="codeArr" />
         </template>

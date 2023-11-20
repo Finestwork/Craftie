@@ -4,26 +4,48 @@
 @tailwind base;
 @tailwind utilities;
 
-@layer base{
-  html{
-    font-family: 'Inter', 'sans-serif';
-  }
+@layer base {
+    html {
+        font-family: 'Inter', 'sans-serif';
+    }
 }
-@layer utilities{
-  .drag-region{
-    -webkit-app-region: drag;
-  }
-  .no-drag-region{
-    -webkit-app-region: no-drag;
-  }
+
+@layer utilities {
+    .drag-region {
+        -webkit-app-region: drag;
+    }
+
+    .no-drag-region {
+        -webkit-app-region: no-drag;
+    }
+
+    *::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #8F93A220;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: #8F93A210;
+    }
+
+    *::-webkit-scrollbar-thumb:active {
+        background-color: #80CBC4;
+    }
 }
 
 html,
 body,
-#app{
-  height: 100%;
+#app {
+    height: 100%;
 }
 
-body{
-  overflow: hidden;
+body {
+    overflow: hidden;
 }

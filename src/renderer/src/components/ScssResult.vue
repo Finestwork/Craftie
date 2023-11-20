@@ -35,8 +35,7 @@ onMounted(async () => {
         folding: false,
         minimap: {
             enabled: false
-        },
-        scrollBeyondLastLine: false
+        }
     };
     editor.defineTheme('ocean', MaterialOcean);
     scssEditor = editor.create(unref(editorWrapper), EditorOptions);
