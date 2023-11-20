@@ -4,7 +4,7 @@ import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
 import TabButtonDropdown from '@components/TabButtonDropdown.vue';
 
 // NPM
-import { nextTick, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 
@@ -12,6 +12,12 @@ const target = ref();
 const tabButtonDropdown = ref();
 const showDropdown = ref(false);
 const { activate, deactivate } = useFocusTrap(tabButtonDropdown);
+
+onMounted(() => {
+    window.electron.ipcRenderer.on('onShortcutOpenTabDropdown', () => {
+        showDropdown.value = true;
+    });
+});
 
 onClickOutside(target, () => {
     showDropdown.value = false;

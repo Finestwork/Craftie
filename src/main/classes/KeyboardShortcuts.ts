@@ -14,6 +14,7 @@ export default class KeyboardShortcuts {
         this.runCode();
         this.switchTab();
         this.onClickSaveFile();
+        this.openTabDropdown();
     }
     public destroy() {
         globalShortcut.unregisterAll();
@@ -49,6 +50,16 @@ export default class KeyboardShortcuts {
     private onClickSaveFile() {
         globalShortcut.register('CmdOrCtrl+S', () => {
             this.mainWindow.mainWindow.webContents.send('onShortcutSaveFile');
+        });
+    }
+
+    /**
+     * Opens up dropdown when ctrl + t is pressed
+     * @private
+     */
+    private openTabDropdown() {
+        globalShortcut.register('CmdOrCtrl+t', () => {
+            this.mainWindow.mainWindow.webContents.send('onShortcutOpenTabDropdown');
         });
     }
 }
