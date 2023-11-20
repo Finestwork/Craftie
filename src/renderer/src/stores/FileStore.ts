@@ -24,6 +24,8 @@ export const useFileStore = defineStore('fileStore', {
         },
         deleteFileByIndex(index: number) {
             this.files.splice(index, 1);
+            if (this.currentActiveFileInd === 0) return;
+            this.currentActiveFileInd--;
         },
         updateFileContent(content: string) {
             const CurrentIndex = this.currentActiveFileInd;
