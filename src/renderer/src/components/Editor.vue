@@ -58,8 +58,8 @@ watch(
     () => FileStore.currentActiveFileInd,
     () => {
         const File = FileStore.getCurrentFile;
-        monacoEditor?.setValue(File.content);
         setEditorLanguage();
+        monacoEditor?.setValue(File.content);
     }
 );
 </script>

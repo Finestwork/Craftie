@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ScssResult from '@components/ScssResult.vue';
+// NPM
 import { ref } from 'vue';
 
 const codeArr = ref([]);
@@ -15,7 +17,7 @@ window.electron.ipcRenderer.on('displayCodeResult', (_, codeResult) => {
             </p>
         </template>
         <template v-else>
-            <pre>{{ codeArr }}</pre>
+            <ScssResult :code="codeArr" />
         </template>
     </div>
 </template>
