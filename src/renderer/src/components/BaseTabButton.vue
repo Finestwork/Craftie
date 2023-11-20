@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import JavaScriptIcon from '@components/JavaScriptIcon.vue';
+import SassIcon from '@components/SassIcon.vue';
 import XCloseIcon from '@components/XCloseIcon.vue';
 
 // NPM
-import { nextTick, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useElementSize } from '@vueuse/core/index';
 
 const Props = defineProps({
     isActive: {
         type: Boolean,
+        required: true
+    },
+    fileType: {
+        type: String,
         required: true
     }
 });
@@ -35,6 +40,14 @@ const onMouseLeave = () => {
         marginRight: null
     });
 };
+
+const getComponent = computed(() => {
+    return Props.fileType === 'js'
+        ? JavaScriptIcon
+        : Props.fileType === 'sass' || 'scss'
+          ? SassIcon
+          : '';
+});
 </script>
 
 <template>
@@ -50,8 +63,9 @@ const onMouseLeave = () => {
                 v-if="Props.isActive"
             ></span>
             <span class="mr-2 block w-[12px]">
-                <JavaScriptIcon
-                    class="fill-[#F7DF1E] group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
+                <Component
+                    class="fill-tab-foreground group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
+                    :is="getComponent"
                 />
             </span>
             <span

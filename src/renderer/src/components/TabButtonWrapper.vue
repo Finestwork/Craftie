@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TabButton from '@components/BaseTabButton.vue';
+import BaseTabButton from '@components/BaseTabButton.vue';
 import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
 import { useFileStore } from '@renderer/stores/FileStore';
 
@@ -19,22 +19,26 @@ onMounted(() => {
 const FileNames = computed(() => {
     return FileStore.files.map((file) => {
         const FileName = file.fileName;
-        return FileName.trim() === '' ? 'Unsaved Work' : FileName;
+        return {
+            name: FileName.trim() === '' ? 'Unsaved Work' : FileName,
+            type: file.type
+        };
     });
 });
 </script>
 
 <template>
     <div class="flex w-full bg-editor-dark">
-        <TabButton
-            v-for="(name, ind) in FileNames"
-            :key="`${name}${ind}`"
+        <BaseTabButton
+            v-for="(file, ind) in FileNames"
+            :key="`${file.name}${ind}`"
             :is-active="FileStore.currentActiveFileInd === ind"
+            :file-type="file.type"
             @close-file="FileStore.deleteFileByIndex(ind)"
             @switch-tab="FileStore.currentActiveFileInd = ind"
         >
-            <template #name>{{ name }}</template>
-        </TabButton>
+            <template #name>{{ file.name }}</template>
+        </BaseTabButton>
         <AddFileButtonIcon @click="FileStore.addNewFile" />
     </div>
 </template>
