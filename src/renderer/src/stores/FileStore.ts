@@ -45,6 +45,10 @@ export const useFileStore = defineStore('fileStore', {
             }
 
             this.currentActiveFileInd++;
+        },
+        setActiveFileNameAndPath(name: string, path: string) {
+            this.files[this.currentActiveFileInd].filePath = path;
+            this.files[this.currentActiveFileInd].fileName = name;
         }
     },
     getters: {

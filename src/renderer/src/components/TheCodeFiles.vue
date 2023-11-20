@@ -26,6 +26,14 @@ onMounted(() => {
         const File = FileStore.getCurrentFile;
         window.api.saveFile(File.type, File.content);
     });
+
+    window.electron.ipcRenderer.on(
+        'fileSavedSuccessfully',
+        (_, filePath: string, baseName: string) => {
+            FileStore.setActiveFileNameAndPath(baseName, filePath);
+        }
+    );
+
     // Divider's initial position
     Object.assign(divider.value.style, {
         left: `leftPanelWidth`

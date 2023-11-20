@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain, dialog } from 'electron';
+import { basename } from 'path';
 import vm from 'vm';
 import { writeFile } from 'fs/promises';
 import { getSaveDialogOptions } from '@helpers/FileStoreHelper';
@@ -50,7 +51,16 @@ export default class IPCHandler {
             if (result.canceled) return;
 
             const { filePath } = result;
-            await writeFile(<string>filePath, code, { encoding: 'utf-8' });
+
+            if (!filePath) return;
+            await writeFile(filePath, code, { encoding: 'utf-8' });
+
+            // Tell the renderer to update the filePath and filename from FileStore
+            CurrentBrowserWindow.webContents.send(
+                'fileSavedSuccessfully',
+                filePath,
+                basename(filePath)
+            );
         });
     }
 }
