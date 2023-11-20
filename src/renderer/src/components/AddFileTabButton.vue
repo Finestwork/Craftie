@@ -17,7 +17,11 @@ onClickOutside(target, () => {
 
 <template>
     <BaseButtonDropdown :show="showDropdown">
-        <AddFileButtonIcon ref="target" @click="showDropdown = !showDropdown" />
+        <AddFileButtonIcon
+            ref="target"
+            :is-active="showDropdown"
+            @click="showDropdown = !showDropdown"
+        />
         <template #float>
             <TabButtonDropdown @click="showDropdown = false" />
         </template>
