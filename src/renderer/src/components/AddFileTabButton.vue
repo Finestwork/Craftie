@@ -4,15 +4,28 @@ import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
 import TabButtonDropdown from '@components/TabButtonDropdown.vue';
 
 // NPM
-import { ref } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import { onClickOutside } from '@vueuse/core';
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 
 const target = ref();
+const tabButtonDropdown = ref();
 const showDropdown = ref(false);
+const { activate, deactivate } = useFocusTrap(tabButtonDropdown);
 
 onClickOutside(target, () => {
     showDropdown.value = false;
 });
+watch(
+    () => showDropdown.value,
+    async (isActive) => {
+        await nextTick();
+        console.log(isActive, tabButtonDropdown.value);
+        if (isActive) activate();
+        else deactivate();
+    },
+    { flush: 'post' }
+);
 </script>
 
 <template>
@@ -23,7 +36,9 @@ onClickOutside(target, () => {
             @click="showDropdown = !showDropdown"
         />
         <template #float>
-            <TabButtonDropdown @click="showDropdown = false" />
+            <div ref="tabButtonDropdown">
+                <TabButtonDropdown @click="showDropdown = false" />
+            </div>
         </template>
     </BaseButtonDropdown>
 </template>

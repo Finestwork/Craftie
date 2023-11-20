@@ -10,7 +10,7 @@ const Props = defineProps({
 </script>
 <template>
     <button
-        class="group block h-[36px] w-[38px] p-[12px] hover:bg-tab-hover focus:bg-tab-hover"
+        class="group block h-[36px] w-[38px] p-[12px] outline-none hover:bg-tab-hover focus:bg-tab-hover"
         :class="{
             'group-active bg-tab-hover': Props.isActive,
             'group-inactive bg-[#1a1e2b]': !Props.isActive

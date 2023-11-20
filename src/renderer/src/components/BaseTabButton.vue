@@ -54,7 +54,7 @@ const getComponent = computed(() => {
     <div class="relative" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <button
             ref="tabBtn"
-            class="overflow group relative flex h-full w-full items-center px-4 py-2 hover:bg-tab-hover focus:bg-tab-hover"
+            class="overflow group relative flex h-full w-full items-center px-4 py-2 outline-none hover:bg-tab-hover focus:bg-tab-hover"
             type="button"
             @click="switchTab"
         >
