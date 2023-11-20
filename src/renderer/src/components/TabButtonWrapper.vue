@@ -39,6 +39,6 @@ const FileNames = computed(() => {
         >
             <template #name>{{ file.name }}</template>
         </BaseTabButton>
-        <AddFileButtonIcon @click="FileStore.addNewFile" />
+        <AddFileButtonIcon @click="FileStore.addNewFile('js')" />
     </div>
 </template>

@@ -17,7 +17,8 @@ export const useFileStore = defineStore('fileStore', {
             const File = {
                 type: type,
                 fileName: '',
-                content: ''
+                content: '',
+                filePath: ''
             };
             this.files.push(File);
         },
