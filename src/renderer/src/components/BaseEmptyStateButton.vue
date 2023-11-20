@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SlideupToolTip from '@components/SlideupToolTip.vue';
+import BaseSlideUpToolTip from '@components/BaseSlideUpToolTip.vue';
 </script>
 <template>
-    <SlideupToolTip>
+    <BaseSlideUpToolTip>
         <button
             class="group mr-5 h-[50px] w-[70px] rounded-md bg-[#292D40] p-2 hover:bg-tab-hover focus:bg-tab-hover"
             ref="reference"
@@ -18,5 +18,5 @@ import SlideupToolTip from '@components/SlideupToolTip.vue';
         <template #tooltip>
             <slot name="tooltip"></slot>
         </template>
-    </SlideupToolTip>
+    </BaseSlideUpToolTip>
 </template>
