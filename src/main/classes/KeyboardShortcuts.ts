@@ -7,10 +7,16 @@ export default class KeyboardShortcuts {
      * @constructor
      * @param {MainWindow} mainWindow - The main window of the application.
      */
-    constructor(private mainWindow: MainWindow) {
+    constructor(private mainWindow: MainWindow) {}
+
+    // Register all shortcuts
+    public register() {
         this.runCode();
         this.switchTab();
         this.onClickSaveFile();
+    }
+    public destroy() {
+        globalShortcut.unregisterAll();
     }
 
     /**

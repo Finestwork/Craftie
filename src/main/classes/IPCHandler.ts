@@ -38,7 +38,7 @@ export default class IPCHandler {
         });
     }
 
-    private saveFile(code: string) {
+    private saveFile() {
         ipcMain.on('saveFile', async (event, code) => {
             const CurrentBrowserWindow = BrowserWindow.fromWebContents(event.sender);
             if (!CurrentBrowserWindow) return;

@@ -19,6 +19,13 @@ export default class App {
      * @private
      */
     private whenReady() {
+        const KeyboardSC = new KeyboardShortcuts(this.mainWindow);
+        app.on('browser-window-focus', () => {
+            KeyboardSC.register();
+        });
+        app.on('browser-window-blur', () => {
+            KeyboardSC.destroy();
+        });
         app.whenReady().then(() => {
             electronApp.setAppUserModelId('com.craftie');
 
@@ -37,9 +44,6 @@ export default class App {
                 // dock icon is clicked and there are no other windows open.
                 if (BrowserWindow.getAllWindows().length === 0) this.mainWindow.createWindow();
             });
-
-            // Add keyboard shortcuts
-            new KeyboardShortcuts(this.mainWindow);
         });
     }
 
