@@ -4,9 +4,19 @@ import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
 import { useFileStore } from '@renderer/stores/FileStore';
 
 // NPM
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch, ref } from 'vue';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
 
 const FileStore = useFileStore();
+const splide = ref();
+const SplideOptions = {
+    controls: false,
+    arrows: false,
+    autoWidth: true,
+    drag: false,
+    pagination: false,
+    live: false
+};
 
 onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutSwitchTabLeft', () => {
@@ -25,20 +35,37 @@ const FileNames = computed(() => {
         };
     });
 });
+
+watch(
+    () => FileStore.currentActiveFileInd,
+    (value: number) => {
+        const SplideController = splide.value.splide.Components.Controller;
+        SplideController.go(value);
+    },
+    { flush: 'post' }
+);
 </script>
 
 <template>
     <div class="flex w-full bg-editor-dark">
-        <BaseTabButton
-            v-for="(file, ind) in FileNames"
-            :key="`${file.name}${ind}`"
-            :is-active="FileStore.currentActiveFileInd === ind"
-            :file-type="file.type"
-            @close-file="FileStore.deleteFileByIndex(ind)"
-            @switch-tab="FileStore.currentActiveFileInd = ind"
-        >
-            <template #name>{{ file.name }}</template>
-        </BaseTabButton>
-        <AddFileButtonIcon @click="FileStore.addNewFile('js')" />
+        <Splide class="w-full" :options="SplideOptions" ref="splide">
+            <SplideSlide v-for="(file, ind) in FileNames" :key="`${file.name}${ind}`">
+                <BaseTabButton
+                    :is-active="FileStore.currentActiveFileInd === ind"
+                    :file-type="file.type"
+                    @close-file="FileStore.deleteFileByIndex(ind)"
+                    @switch-tab="FileStore.currentActiveFileInd = ind"
+                >
+                    <template #name>{{ file.name }}</template>
+                </BaseTabButton>
+            </SplideSlide>
+            <SplideSlide>
+                <AddFileButtonIcon @click="FileStore.addNewFile('js')" />
+            </SplideSlide>
+        </Splide>
     </div>
 </template>
+
+<style>
+@import '@splidejs/vue-splide/css/core';
+</style>
