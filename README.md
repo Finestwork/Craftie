@@ -1,6 +1,13 @@
 # Heads up!
 Craftie is still in beta mode, but some basic features are already implemented and still trying to add more features. Please note that I have only tested this application on windows but you can run the application on Linux and macOS.
 
+![Demo](demo.gif)
+
+Currently not supported:
+- import/export in javascript
+- .sass
+- code formatter
+
 &nbsp;
 
 ![Banner](Banner.png)
