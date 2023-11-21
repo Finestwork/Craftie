@@ -42,6 +42,10 @@ onMounted(() => {
         ActiveElement?.blur?.();
         FileStore.switchActiveFileInd('inc');
     });
+    window.electron.ipcRenderer.on('closeActiveTab', () => {
+        if (FileStore.areFilesEmpty) return;
+        FileStore.deleteCurrentActiveFile();
+    });
 });
 watch(
     () => FileStore.currentActiveFileInd,

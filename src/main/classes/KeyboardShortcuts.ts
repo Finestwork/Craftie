@@ -15,7 +15,9 @@ export default class KeyboardShortcuts {
         this.switchTab();
         this.onClickSaveFile();
         this.openTabDropdown();
+        this.closeActiveTab();
     }
+
     public destroy() {
         globalShortcut.unregisterAll();
     }
@@ -26,7 +28,7 @@ export default class KeyboardShortcuts {
      */
     private runCode() {
         globalShortcut.register('Alt+Enter', () => {
-            this.mainWindow.mainWindow.webContents.send('onShortcutKeyRunCode');
+            this.sendWebContents('onShortcutKeyRunCode');
         });
     }
 
@@ -36,10 +38,10 @@ export default class KeyboardShortcuts {
      */
     private switchTab() {
         globalShortcut.register('Alt+Left', () => {
-            this.mainWindow.mainWindow.webContents.send('onShortcutSwitchTabLeft');
+            this.sendWebContents('onShortcutSwitchTabLeft');
         });
         globalShortcut.register('Alt+Right', () => {
-            this.mainWindow.mainWindow.webContents.send('onShortcutSwitchTabRight');
+            this.sendWebContents('onShortcutSwitchTabRight');
         });
     }
 
@@ -49,7 +51,7 @@ export default class KeyboardShortcuts {
      */
     private onClickSaveFile() {
         globalShortcut.register('CmdOrCtrl+S', () => {
-            this.mainWindow.mainWindow.webContents.send('onShortcutSaveFile');
+            this.sendWebContents('onShortcutSaveFile');
         });
     }
 
@@ -59,10 +61,20 @@ export default class KeyboardShortcuts {
      */
     private openTabDropdown() {
         globalShortcut.register('CmdOrCtrl+t', () => {
-            this.mainWindow.mainWindow.webContents.send('onShortcutOpenTabDropdown');
+            this.sendWebContents('onShortcutOpenTabDropdown');
         });
         globalShortcut.register('Escape', () => {
-            this.mainWindow.mainWindow.webContents.send('onShortcutCloseTabDropdown');
+            this.sendWebContents('onShortcutCloseTabDropdown');
         });
+    }
+
+    private closeActiveTab() {
+        globalShortcut.register('CommandOrControl+W', () => {
+            this.sendWebContents('closeActiveTab');
+        });
+    }
+
+    private sendWebContents(channel: string) {
+        this.mainWindow.mainWindow.webContents.send(channel);
     }
 }
