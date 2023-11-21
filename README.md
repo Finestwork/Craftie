@@ -1,12 +1,27 @@
-# craftie
+# Heads up!
+Craftie is still in beta mode, but some basic features are already implemented and still trying to add more features. Please note that I have only tested this application on windows but you can run the application on Linux and macOS.
 
-An Electron application with Vue and TypeScript
+&nbsp;
 
-## Recommended IDE Setup
+![Banner](Banner.png)
+Craftie is a playground for learning and experimenting with JavaScript and SASS. It's originally designed to help you craft your algorithms or practice learning algorithms in javascript. Whether you're a newbie coder learning the ropes, or a seasoned programmer looking to test out algorithm or data structure, Craftie is the space for you!
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+Powered by:
+- [Electron](https://www.electronjs.org/)
+- [Vue.js](https://vuejs.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Pinia](https://pinia.vuejs.org/)
 
-## Project Setup
+Special thanks to:
+- [UntitledUI Icons](https://www.figma.com/file/ns9u5Z0thmja2C0mcXHKjn/%E2%9D%96-Untitled-UI-Icons-%E2%80%93-1%2C100%2B-essential-Figma-icons-(Community)?type=design&node-id=181-128951&mode=design)
+- [IconaMoon](https://www.figma.com/file/bfFPEvp6u885mpBdb3DruO/IconaMoon-1.1-%7C-%2B2400-Icons%2C-8-Styles-(Community)?type=design&node-id=168-2087&mode=design)
+
+# How to Get Started?
+
+Getting started with Craftie is easy! Simply clone this repository and follow the instructions in the README file. You'll be crafting code in no time!
+
+We're excited for you to join us in the Craftie playground. Happy coding!
+
 
 ### Install
 
