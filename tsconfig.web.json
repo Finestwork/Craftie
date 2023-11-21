@@ -3,6 +3,7 @@
     "include": [
         "src/renderer/src/env.d.ts",
         "src/renderer/src/**/*",
+        "src/helpers/**/*",
         "src/renderer/src/**/*.vue",
         "src/**/*.d.ts"
     ],
@@ -20,7 +21,7 @@
                 "src/renderer/src/composables/*"
             ],
             "@helpers/*": [
-                "src/Helpers/*"
+                "src/helpers/*"
             ]
         }
     }

@@ -4,9 +4,12 @@ import { is } from '@electron-toolkit/utils';
 import icon from '../../../build/icons/256x256.png?asset';
 
 export default class MainWindow {
-    private _mainWindow: BrowserWindow;
+    private _mainWindow: BrowserWindow | null;
 
-    get mainWindow(): BrowserWindow {
+    constructor() {
+        this._mainWindow = null;
+    }
+    get mainWindow(): BrowserWindow | null {
         return this._mainWindow;
     }
 
@@ -43,6 +46,8 @@ export default class MainWindow {
     }
 
     private listeners() {
+        if (this._mainWindow === null) return;
+
         this._mainWindow.on('ready-to-show', () => {
             this._mainWindow?.show?.();
         });
@@ -61,6 +66,8 @@ export default class MainWindow {
      * @desc HMR for renderer base on electron-vite cli. Load the remote URL for development or the local html file for production.
      */
     private handleFileLoad() {
+        if (this._mainWindow === null) return;
+
         if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
             this._mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
         } else {

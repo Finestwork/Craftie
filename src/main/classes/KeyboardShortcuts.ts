@@ -1,5 +1,6 @@
 import MainWindow from './MainWindow';
 import { globalShortcut } from 'electron';
+import type { OpenDialogOptions } from 'electron';
 import { dialog } from 'electron';
 import { readFile } from 'fs';
 import { basename, extname } from 'path';
@@ -88,7 +89,9 @@ export default class KeyboardShortcuts {
     private openFile() {
         globalShortcut.register('CommandOrControl+O', async () => {
             const CurrentBrowserWindow = this.mainWindow.mainWindow;
-            const DialogOptions = {
+            if (!CurrentBrowserWindow) return;
+
+            const DialogOptions: OpenDialogOptions = {
                 title: 'Importing a file',
                 filters: [
                     { name: 'Javascript', extensions: ['js'] },
@@ -118,6 +121,7 @@ export default class KeyboardShortcuts {
     }
 
     private _sendWebContents(channel: string, ...args) {
+        if (this.mainWindow.mainWindow === null) return;
         this.mainWindow.mainWindow.webContents.send(channel, ...args);
     }
 }

@@ -1,34 +1,36 @@
 {
-  "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
-  "include": [
-    "src/renderer/src/env.d.ts",
-    "src/renderer/src/**/*",
-    "src/renderer/src/**/*.vue",
-    "src/**/*.d.ts"
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@renderer/*": [
-        "src/renderer/src/*"
-      ],
-      "@components/*": [
-        "src/renderer/src/components/*"
-      ],
-        "@composables/*": [
-            "src/renderer/src/composables/*"
-        ],
-        "@helpers/*": [
-            "src/Helpers/*"
-        ]
-    }
-  },
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+    "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+    "include": [
+        "src/renderer/src/env.d.ts",
+        "src/renderer/src/**/*",
+        "src/helpers/**/*",
+        "src/renderer/src/**/*.vue",
+        "src/**/*.d.ts"
+    ],
+    "compilerOptions": {
+        "composite": true,
+        "baseUrl": ".",
+        "paths": {
+            "@renderer/*": [
+                "src/renderer/src/*"
+            ],
+            "@components/*": [
+                "src/renderer/src/components/*"
+            ],
+            "@composables/*": [
+                "src/renderer/src/composables/*"
+            ],
+            "@helpers/*": [
+                "src/helpers/*"
+            ]
+        }
     },
-    {
-      "path": "./tsconfig.web.json"
-    }
-  ]
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        },
+        {
+            "path": "./tsconfig.web.json"
+        }
+    ]
 }

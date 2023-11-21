@@ -1,7 +1,8 @@
-import { unref, ref, Ref } from 'vue';
+import { unref, ref } from 'vue';
+import type { Ref } from 'vue';
 
 export const useTabDropdownNavigation = (wrapper: Ref<HTMLElement>) => {
-    const buttons: Ref<NodeListOf<HTMLButtonElement>> | Ref<null> = ref(null);
+    const buttons: Ref<NodeListOf<HTMLButtonElement> | null> = ref(null);
     let currentActiveIndex = -1;
 
     const handleNavigation = (e: KeyboardEvent) => {
@@ -30,6 +31,7 @@ export const useTabDropdownNavigation = (wrapper: Ref<HTMLElement>) => {
     const activate = () => {
         const Wrapper = unref(wrapper);
         buttons.value = Wrapper.querySelectorAll('button');
+        if (!buttons.value) return;
         currentActiveIndex = Array.from(buttons.value).findIndex(
             (button) => button === document.activeElement
         );

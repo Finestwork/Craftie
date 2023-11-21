@@ -33,7 +33,7 @@ export const initEditor = () => {
                 if (label === 'typescript' || label === 'javascript') {
                     return new TypescriptWorker();
                 } else if (label === 'css' || label === 'scss') {
-                    return CssWorker();
+                    return new CssWorker();
                 }
                 return new EditorWorker();
             }
