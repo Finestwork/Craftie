@@ -19,7 +19,7 @@ export default class MainWindow {
         this._mainWindow = new BrowserWindow({
             minWidth: 420,
             minHeight: 400,
-            width: width / 1.25,
+            width: Math.ceil(width * 0.7),
             height: height / 1.25,
             show: false,
             autoHideMenuBar: true,

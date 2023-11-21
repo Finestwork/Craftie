@@ -27,6 +27,7 @@ export default class App {
             KeyboardSC.destroy();
         });
         app.whenReady().then(() => {
+            const self = this;
             electronApp.setAppUserModelId('com.craftie');
 
             // Default open or close DevTools by F12 in development
@@ -37,12 +38,12 @@ export default class App {
             });
 
             // Create window
-            this.mainWindow.createWindow();
+            self.mainWindow.createWindow();
 
             app.on('activate', function () {
                 // On macOS it's common to re-create a window in the app when the
                 // dock icon is clicked and there are no other windows open.
-                if (BrowserWindow.getAllWindows().length === 0) this.mainWindow.createWindow();
+                if (BrowserWindow.getAllWindows().length === 0) self.mainWindow.createWindow();
             });
         });
     }
