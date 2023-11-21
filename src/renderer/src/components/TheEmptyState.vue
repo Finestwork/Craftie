@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BaseShortcutMessage from '@components/BaseShortcutMessage.vue';
 import BaseEmptyStateButton from '@components/BaseEmptyStateButton.vue';
 import JavaScriptIcon from '@components/JavaScriptIcon.vue';
 import SassIcon from '@components/SassIcon.vue';
@@ -8,15 +9,25 @@ const FileStore = useFileStore();
 </script>
 
 <template>
-    <div class="relative flex h-full items-center justify-center bg-editor-dark">
-        <BaseEmptyStateButton @click="FileStore.addNewFile('js')">
-            <JavaScriptIcon />
-            <template #tooltip>Create JavaScript File</template>
-        </BaseEmptyStateButton>
-        <BaseEmptyStateButton @click="FileStore.addNewFile('scss')">
-            <SassIcon />
-            <template #tooltip>Create Scss File</template>
-        </BaseEmptyStateButton>
+    <div class="relative flex h-full flex-col items-center justify-center bg-editor-dark">
+        <div class="flex">
+            <BaseEmptyStateButton @click="FileStore.addNewFile('js')">
+                <JavaScriptIcon />
+                <template #tooltip>Create JavaScript File</template>
+            </BaseEmptyStateButton>
+            <BaseEmptyStateButton @click="FileStore.addNewFile('scss')">
+                <SassIcon />
+                <template #tooltip>Create Scss File</template>
+            </BaseEmptyStateButton>
+        </div>
+
+        <div class="mt-10">
+            <BaseShortcutMessage>
+                Open Files:
+                <template #key1>Ctrl or Cmd</template>
+                <template #key2>O</template>
+            </BaseShortcutMessage>
+        </div>
 
         <p
             class="absolute bottom-4 left-0 w-full text-center text-sm font-medium text-tab-foreground"
