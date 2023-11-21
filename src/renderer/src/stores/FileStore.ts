@@ -7,7 +7,8 @@ type TFile = {
     id: number;
     type: TFileType;
     fileName: string;
-    content: string;
+    content: string; // Current content
+    previousContent: string; // Content from the time it was saved
     filePath: string;
 };
 type TOpenedFile = { type: TFileType; fileName: string; content: string; filePath: string };
@@ -23,6 +24,7 @@ export const useFileStore = defineStore('fileStore', {
                 type: type,
                 fileName: '',
                 content: '',
+                previousContent: '',
                 filePath: ''
             };
             this.files.push(File);
@@ -33,6 +35,7 @@ export const useFileStore = defineStore('fileStore', {
                 type: file.type,
                 fileName: file.fileName,
                 content: file.content,
+                previousContent: file.content,
                 filePath: file.filePath
             };
             this.files.push(File);
@@ -50,6 +53,10 @@ export const useFileStore = defineStore('fileStore', {
         updateFileContent(content: string) {
             const CurrentIndex = this.currentActiveFileInd;
             this.files[CurrentIndex].content = content;
+        },
+        updateFilePreviousContent(content: string) {
+            const CurrentIndex = this.currentActiveFileInd;
+            this.files[CurrentIndex].previousContent = content;
         },
         switchActiveFileInd(operation: 'inc' | 'dec' = 'inc') {
             const CurrentFileLength = this.files.length - 1;

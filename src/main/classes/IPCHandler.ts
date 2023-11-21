@@ -82,7 +82,8 @@ export default class IPCHandler {
             CurrentBrowserWindow.webContents.send(
                 'fileSavedSuccessfully',
                 filePath,
-                basename(filePath)
+                basename(filePath),
+                code
             );
         });
     }
@@ -93,8 +94,14 @@ export default class IPCHandler {
      *  @private
      */
     private overwriteFile() {
-        ipcMain.on('overwriteFile', async (_, filePath: string, code: string) => {
-            const Result = await writeFile(filePath, code, { encoding: 'utf-8' });
+        ipcMain.on('overwriteFile', async (e, filePath: string, code: string) => {
+            const CurrentBrowserWindow = BrowserWindow.fromWebContents(e.sender);
+            if (!CurrentBrowserWindow) return;
+
+            await writeFile(filePath, code, { encoding: 'utf-8' });
+
+            // Tell the renderer to update previous content from FileStore
+            CurrentBrowserWindow.webContents.send('updateFilePreviousContent', code);
         });
     }
 }
