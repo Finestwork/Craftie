@@ -36,13 +36,12 @@ export default class App {
                 optimizer.watchWindowShortcuts(window);
             });
 
-            const createWindow = this.mainWindow.createWindow;
-            createWindow();
+            this.mainWindow.createWindow();
 
-            app.on('activate', function () {
+            app.on('activate',  () => {
                 // On macOS it's common to re-create a window in the app when the
                 // dock icon is clicked and there are no other windows open.
-                if (BrowserWindow.getAllWindows().length === 0) createWindow();
+                if (BrowserWindow.getAllWindows().length === 0) this.mainWindow.createWindow();
             });
         });
     }
