@@ -4,7 +4,7 @@ Craftie is still in beta mode, but some basic features are already implemented a
 &nbsp;
 
 ![Banner](Banner.png)
-Craftie is a playground for learning and experimenting with JavaScript and SASS. It's originally designed to help you craft your algorithms or practice learning algorithms in javascript. Whether you're a newbie coder learning the ropes, or a seasoned programmer looking to test out algorithm or data structure, Craftie is the space for you!
+Craftie is a playground for learning and experimenting with JavaScript and SASS. It's specifically designed to help you craft your algorithms and practice learning algorithms in JavaScript. Whether you're a newbie coder just learning the ropes or a seasoned programmer looking to test out an algorithm or a data structure, Craftie is the perfect space for you!
 
 Powered by:
 - [Electron](https://www.electronjs.org/)
