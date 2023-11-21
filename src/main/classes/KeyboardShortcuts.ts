@@ -1,5 +1,8 @@
 import MainWindow from './MainWindow';
-import { globalShortcut } from 'electron';
+import { BrowserWindow, globalShortcut } from 'electron';
+import { dialog } from 'electron';
+import { readFile } from 'fs';
+import { basename, extname } from 'path';
 
 export default class KeyboardShortcuts {
     /**
@@ -16,6 +19,7 @@ export default class KeyboardShortcuts {
         this.onClickSaveFile();
         this.openTabDropdown();
         this.closeActiveTab();
+        this.openFile();
     }
 
     public destroy() {
@@ -28,7 +32,7 @@ export default class KeyboardShortcuts {
      */
     private runCode() {
         globalShortcut.register('Alt+Enter', () => {
-            this.sendWebContents('onShortcutKeyRunCode');
+            this._sendWebContents('onShortcutKeyRunCode');
         });
     }
 
@@ -38,10 +42,10 @@ export default class KeyboardShortcuts {
      */
     private switchTab() {
         globalShortcut.register('Alt+Left', () => {
-            this.sendWebContents('onShortcutSwitchTabLeft');
+            this._sendWebContents('onShortcutSwitchTabLeft');
         });
         globalShortcut.register('Alt+Right', () => {
-            this.sendWebContents('onShortcutSwitchTabRight');
+            this._sendWebContents('onShortcutSwitchTabRight');
         });
     }
 
@@ -51,7 +55,7 @@ export default class KeyboardShortcuts {
      */
     private onClickSaveFile() {
         globalShortcut.register('CmdOrCtrl+S', () => {
-            this.sendWebContents('onShortcutSaveFile');
+            this._sendWebContents('onShortcutSaveFile');
         });
     }
 
@@ -61,20 +65,59 @@ export default class KeyboardShortcuts {
      */
     private openTabDropdown() {
         globalShortcut.register('CmdOrCtrl+t', () => {
-            this.sendWebContents('onShortcutOpenTabDropdown');
+            this._sendWebContents('onShortcutOpenTabDropdown');
         });
         globalShortcut.register('Escape', () => {
-            this.sendWebContents('onShortcutCloseTabDropdown');
+            this._sendWebContents('onShortcutCloseTabDropdown');
         });
     }
 
+    /*
+     * Close active text editor
+     */
     private closeActiveTab() {
         globalShortcut.register('CommandOrControl+W', () => {
-            this.sendWebContents('closeActiveTab');
+            this._sendWebContents('closeActiveTab');
         });
     }
 
-    private sendWebContents(channel: string) {
-        this.mainWindow.mainWindow.webContents.send(channel);
+    /*
+     * Open up a file
+     * @private
+     */
+    private openFile() {
+        globalShortcut.register('CommandOrControl+O', async () => {
+            const CurrentBrowserWindow = this.mainWindow.mainWindow;
+            const DialogOptions = {
+                title: 'Importing a file',
+                filters: [
+                    { name: 'Javascript', extensions: ['js'] },
+                    {
+                        name: 'SCSS',
+                        extensions: ['scss']
+                    }
+                ],
+                properties: ['openFile', 'multiSelections']
+            };
+            const Result = await dialog.showOpenDialog(CurrentBrowserWindow, DialogOptions);
+
+            if (Result.canceled) return;
+            Result.filePaths.forEach((filePath) => {
+                readFile(filePath, 'utf-8', (err, data) => {
+                    if (err) {
+                        return;
+                    }
+
+                    const Extension = extname(filePath).split('.')[1].toLowerCase();
+                    const Filename = basename(filePath);
+
+                    this._sendWebContents('fileOpened', filePath, Filename, Extension, data);
+                });
+            });
+        });
+    }
+
+    private _sendWebContents(channel: string, ...args) {
+        this.mainWindow.mainWindow.webContents.send(channel, ...args);
     }
 }

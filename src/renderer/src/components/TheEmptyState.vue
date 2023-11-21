@@ -2,7 +2,6 @@
 import BaseEmptyStateButton from '@components/BaseEmptyStateButton.vue';
 import JavaScriptIcon from '@components/JavaScriptIcon.vue';
 import SassIcon from '@components/SassIcon.vue';
-
 import { useFileStore } from '@renderer/stores/FileStore';
 
 const FileStore = useFileStore();

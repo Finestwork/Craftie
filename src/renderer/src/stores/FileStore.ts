@@ -10,6 +10,7 @@ type TFile = {
     content: string;
     filePath: string;
 };
+type TOpenedFile = { type: TFileType; fileName: string; content: string; filePath: string };
 export const useFileStore = defineStore('fileStore', {
     state: () => ({
         files: [] as TFile[],
@@ -26,6 +27,16 @@ export const useFileStore = defineStore('fileStore', {
             };
             this.files.push(File);
         },
+        addOpenedFile(file: TOpenedFile) {
+            const File = {
+                id: uuidv4(),
+                type: file.type,
+                fileName: file.fileName,
+                content: file.content,
+                filePath: file.filePath
+            };
+            this.files.push(File);
+        },
         deleteFileByIndex(index: number) {
             this.files.splice(index, 1);
             if (this.currentActiveFileInd === 0) return;
@@ -33,6 +44,7 @@ export const useFileStore = defineStore('fileStore', {
         },
         deleteCurrentActiveFile() {
             this.files.splice(this.currentActiveFileInd, 1);
+            if (this.currentActiveFileInd === 0) return;
             this.currentActiveFileInd--;
         },
         updateFileContent(content: string) {

@@ -3,11 +3,12 @@ import TabButtonTransitionGroup from '@components/TabButtonTransitionGroup.vue';
 import BaseTabButton from '@components/BaseTabButton.vue';
 import AddFileTabButton from '@components/AddFileTabButton.vue';
 
-// Store
+import { useCloseActiveTab } from '@composables/ipcListeners/useCloseActiveTab';
+import { navigateOnKeyLeft, navigateOnKeyRight } from '@composables/ipcListeners/useSwitchTab';
 import { useFileStore } from '@renderer/stores/FileStore';
 
 // NPM
-import { computed, onMounted, watch, ref } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 
 const FileStore = useFileStore();
@@ -31,22 +32,10 @@ const FileNames = computed(() => {
     });
 });
 
-onMounted(() => {
-    window.electron.ipcRenderer.on('onShortcutSwitchTabLeft', () => {
-        const ActiveElement = <HTMLElement>document.activeElement;
-        ActiveElement?.blur?.();
-        FileStore.switchActiveFileInd('dec');
-    });
-    window.electron.ipcRenderer.on('onShortcutSwitchTabRight', () => {
-        const ActiveElement = <HTMLElement>document.activeElement;
-        ActiveElement?.blur?.();
-        FileStore.switchActiveFileInd('inc');
-    });
-    window.electron.ipcRenderer.on('closeActiveTab', () => {
-        if (FileStore.areFilesEmpty) return;
-        FileStore.deleteCurrentActiveFile();
-    });
-});
+useCloseActiveTab();
+navigateOnKeyLeft();
+navigateOnKeyRight();
+
 watch(
     () => FileStore.currentActiveFileInd,
     (value: number) => {

@@ -21,7 +21,7 @@ const updateLayoutOnResize = () => {
 };
 
 const setEditorLanguage = () => {
-    const File = FileStore.getCurrentFile;
+    const File = FileStore.files[FileStore.currentActiveFileInd];
     const Language = File.type === 'scss' ? 'scss' : File.type === 'js' ? 'javascript' : '';
     const Model = editor.createModel('', Language);
     monacoEditor?.setModel(Model);
@@ -33,6 +33,7 @@ onMounted(async () => {
     monacoEditor.layout();
     monacoEditor.focus();
     setEditorLanguage();
+    monacoEditor.setValue(FileStore.files[FileStore.currentActiveFileInd].content);
 
     // Attach event listeners
     monacoEditor.onDidChangeModelContent(() => {
@@ -58,6 +59,9 @@ watch(
     () => FileStore.currentActiveFileInd,
     () => {
         const File = FileStore.getCurrentFile;
+        // Sometimes, file is already deleted in store
+        if (!File) return;
+
         setEditorLanguage();
         monacoEditor?.setValue(File.content);
     }
