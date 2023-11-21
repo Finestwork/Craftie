@@ -1,5 +1,5 @@
 import MainWindow from './MainWindow';
-import { BrowserWindow, globalShortcut } from 'electron';
+import { globalShortcut } from 'electron';
 import { dialog } from 'electron';
 import { readFile } from 'fs';
 import { basename, extname } from 'path';

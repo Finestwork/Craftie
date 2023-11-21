@@ -1,8 +1,7 @@
-import { capitalize } from 'vue';
 import { SaveDialogOptions } from 'electron';
 
 export const getFileNameFromType = (type: string): string => {
-    return type === 'js' ? 'Javascript' : type === 'sass' || 'scss' ? 'Sass' : '';
+    return type === 'js' ? 'Javascript' : type === 'scss' ? 'Scss' : '';
 };
 
 /**

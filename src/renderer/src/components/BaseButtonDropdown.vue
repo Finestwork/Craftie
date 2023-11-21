@@ -44,12 +44,12 @@ const onLeave = (el, done) => {
 };
 </script>
 <template>
-    <div class="relative" ref="reference">
+    <div ref="reference" class="relative">
         <slot></slot>
 
         <Teleport to="body">
             <Transition @before-enter="onBeforeEnter" @leave="onLeave">
-                <div class="absolute z-50" ref="floatingEl" v-if="Props.show">
+                <div v-if="Props.show" ref="floatingEl" class="absolute z-50">
                     <slot name="float"></slot>
                 </div>
             </Transition>

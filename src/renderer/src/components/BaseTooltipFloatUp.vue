@@ -43,7 +43,7 @@ const onLeave = (el, done) => {
 
         <Teleport to="body">
             <Transition @before-enter="onBeforeEnter" @leave="onLeave">
-                <div class="absolute" ref="floating" v-if="displayTooltip">
+                <div v-if="displayTooltip" ref="floating" class="absolute">
                     <slot name="float"></slot>
                 </div>
             </Transition>

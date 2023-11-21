@@ -10,10 +10,6 @@ const onClickAddJavaScript = () => {
     FileStore.addNewFile('js');
     Emits('click');
 };
-const onClickAddSass = () => {
-    FileStore.addNewFile('sass');
-    Emits('click');
-};
 const onClickAddScss = () => {
     FileStore.addNewFile('scss');
     Emits('click');

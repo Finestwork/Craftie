@@ -20,7 +20,7 @@ const displayCodeFiles = computed(() => !FileStore.areFilesEmpty);
 
 <template>
     <TheTitleBar ref="nav" />
-    <div class="h-full" ref="mainWrapper">
+    <div ref="mainWrapper" class="h-full">
         <TheCodeFiles v-if="displayCodeFiles" />
         <TheEmptyState v-else />
     </div>

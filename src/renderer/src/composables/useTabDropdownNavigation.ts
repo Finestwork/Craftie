@@ -1,7 +1,7 @@
-import { unref, ref, Ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { unref, ref, Ref } from 'vue';
 
 export const useTabDropdownNavigation = (wrapper: Ref<HTMLElement>) => {
-    let buttons: Ref<NodeListOf<HTMLButtonElement>> | Ref<null> = ref(null);
+    const buttons: Ref<NodeListOf<HTMLButtonElement>> | Ref<null> = ref(null);
     let currentActiveIndex = -1;
 
     const handleNavigation = (e: KeyboardEvent) => {

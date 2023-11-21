@@ -4,7 +4,6 @@ import MaterialOcean from '../themes/MaterialOcean';
 // NPM
 import { ref, watch } from 'vue';
 import { editor } from 'monaco-editor';
-import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import IStandaloneEditorConstructionOptions = editor.IStandaloneEditorConstructionOptions;
 import { onMounted, unref } from 'vue';
 

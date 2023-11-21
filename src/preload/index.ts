@@ -22,7 +22,9 @@ if (process.contextIsolated) {
         contextBridge.exposeInMainWorld('electron', electronAPI);
         contextBridge.exposeInMainWorld('api', api);
     } catch (error) {
-        console.error(error);
+        /**
+         * TODO: Gracefully catch error
+         */
     }
 } else {
     // @ts-ignore (define in dts)

@@ -5,7 +5,7 @@ import { bounceAnimation } from '@composables/useButtonAnimation';
 import { useFileStore } from '@renderer/stores/FileStore';
 
 // NPM
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 
 const FileStore = useFileStore();

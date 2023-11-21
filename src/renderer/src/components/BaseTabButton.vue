@@ -57,11 +57,7 @@ const onMouseLeave = () => {
 };
 
 const getComponent = computed(() => {
-    return Props.fileType === 'js'
-        ? JavaScriptIcon
-        : Props.fileType === 'sass' || 'scss'
-          ? SassIcon
-          : '';
+    return Props.fileType === 'js' ? JavaScriptIcon : Props.fileType === 'scss' ? SassIcon : '';
 });
 </script>
 
@@ -74,13 +70,13 @@ const getComponent = computed(() => {
             @click="switchTab"
         >
             <span
-                class="absolute bottom-0 left-0 h-[2px] w-full bg-button-dark-hover"
                 v-if="Props.isActive"
+                class="absolute bottom-0 left-0 h-[2px] w-full bg-button-dark-hover"
             ></span>
             <span class="mr-2 block w-[12px]">
                 <Component
-                    class="fill-tab-foreground group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
                     :is="getComponent"
+                    class="fill-tab-foreground group-hover:fill-tab-foreground-hover group-focus:fill-tab-foreground-hover"
                 />
             </span>
             <span

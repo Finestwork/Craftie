@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+
 // NPM
 import { v4 as uuidv4 } from 'uuid';
 

@@ -4,8 +4,8 @@ import BaseSlideUpToolTip from '@components/BaseSlideUpToolTip.vue';
 <template>
     <BaseSlideUpToolTip>
         <button
-            class="group mr-5 h-[50px] w-[70px] rounded-md bg-[#292D40] p-2 hover:bg-tab-hover focus:bg-tab-hover"
             ref="reference"
+            class="group mr-5 h-[50px] w-[70px] rounded-md bg-[#292D40] p-2 hover:bg-tab-hover focus:bg-tab-hover"
             type="button"
         >
             <span

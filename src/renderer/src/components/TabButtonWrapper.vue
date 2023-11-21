@@ -47,7 +47,7 @@ watch(
 
 <template>
     <div class="flex w-full bg-editor-dark">
-        <Splide class="w-full" :options="SplideOptions" ref="splide">
+        <Splide ref="splide" class="w-full" :options="SplideOptions">
             <TabButtonTransitionGroup>
                 <SplideSlide v-for="(file, ind) in FileNames" :key="file.id">
                     <BaseTabButton

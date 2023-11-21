@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcRenderer } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer } from '@electron-toolkit/utils';
 import MainWindow from './MainWindow';
 import KeyboardShortcuts from './KeyboardShortcuts';
@@ -27,7 +27,6 @@ export default class App {
             KeyboardSC.destroy();
         });
         app.whenReady().then(() => {
-            const self = this;
             electronApp.setAppUserModelId('com.craftie');
 
             // Default open or close DevTools by F12 in development
@@ -37,13 +36,13 @@ export default class App {
                 optimizer.watchWindowShortcuts(window);
             });
 
-            // Create window
-            self.mainWindow.createWindow();
+            const createWindow = this.mainWindow.createWindow;
+            createWindow();
 
             app.on('activate', function () {
                 // On macOS it's common to re-create a window in the app when the
                 // dock icon is clicked and there are no other windows open.
-                if (BrowserWindow.getAllWindows().length === 0) self.mainWindow.createWindow();
+                if (BrowserWindow.getAllWindows().length === 0) createWindow();
             });
         });
     }
