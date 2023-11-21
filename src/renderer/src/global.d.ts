@@ -6,6 +6,7 @@ declare global {
         api: {
             runCode: (type: string, code: string) => void;
             saveFile: (type: string, code: string) => void;
+            overwriteFile: (filePath: string, code: string) => void;
         };
     }
 }

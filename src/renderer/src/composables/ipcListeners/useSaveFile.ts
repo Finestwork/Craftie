@@ -10,6 +10,12 @@ export const useSaveFileOnKeypress = () => {
             return;
         }
 
+        // Check if file is already saved, instead overwrite its content
+        if (File.filePath.trim() !== '') {
+            window.api.overwriteFile(File.filePath, File.content);
+            return;
+        }
+
         window.api.saveFile(File.type, File.content);
     });
 

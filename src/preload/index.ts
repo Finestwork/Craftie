@@ -8,6 +8,9 @@ const api = {
     },
     saveFile(type: string, code: string) {
         ipcRenderer.send('saveFile', type, code);
+    },
+    overwriteFile(filePath: string, code: string) {
+        ipcRenderer.send('overwriteFile', filePath, code);
     }
 };
 

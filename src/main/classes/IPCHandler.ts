@@ -13,6 +13,7 @@ export default class IPCHandler {
     constructor() {
         this.runCode();
         this.saveFile();
+        this.overwriteFile();
     }
 
     /**
@@ -58,6 +59,10 @@ export default class IPCHandler {
         });
     }
 
+    /**
+     * Saves the file
+     * @private
+     */
     private saveFile() {
         ipcMain.on('saveFile', async (event, type, code) => {
             const CurrentBrowserWindow = BrowserWindow.fromWebContents(event.sender);
@@ -79,6 +84,17 @@ export default class IPCHandler {
                 filePath,
                 basename(filePath)
             );
+        });
+    }
+
+    /**
+     * When file is already saved in the computer and user pressed 'ctr + s'
+     * It will then overwrite the file's content
+     *  @private
+     */
+    private overwriteFile() {
+        ipcMain.on('overwriteFile', async (_, filePath: string, code: string) => {
+            const Result = await writeFile(filePath, code, { encoding: 'utf-8' });
         });
     }
 }
