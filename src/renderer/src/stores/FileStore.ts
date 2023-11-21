@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia';
+// NPM
+import { v4 as uuidv4 } from 'uuid';
 
 type TFileType = 'js' | 'scss';
 type TFile = {
+    id: number;
     type: TFileType;
     fileName: string;
     content: string;
@@ -15,6 +18,7 @@ export const useFileStore = defineStore('fileStore', {
     actions: {
         addNewFile(type: TFileType = 'js') {
             const File = {
+                id: uuidv4(),
                 type: type,
                 fileName: '',
                 content: '',

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TabButtonTransitionGroup from '@components/TabButtonTransitionGroup.vue';
 import BaseTabButton from '@components/BaseTabButton.vue';
 import AddFileTabButton from '@components/AddFileTabButton.vue';
 
@@ -23,6 +24,7 @@ const FileNames = computed(() => {
     return FileStore.files.map((file) => {
         const FileName = file.fileName;
         return {
+            id: file.id,
             name: FileName.trim() === '' ? 'Unsaved Work' : FileName,
             type: file.type
         };
@@ -54,16 +56,18 @@ watch(
 <template>
     <div class="flex w-full bg-editor-dark">
         <Splide class="w-full" :options="SplideOptions" ref="splide">
-            <SplideSlide v-for="(file, ind) in FileNames" :key="`${file.name}${ind}`">
-                <BaseTabButton
-                    :is-active="FileStore.currentActiveFileInd === ind"
-                    :file-type="file.type"
-                    @close-file="FileStore.deleteFileByIndex(ind)"
-                    @switch-tab="FileStore.currentActiveFileInd = ind"
-                >
-                    <template #name>{{ file.name }}</template>
-                </BaseTabButton>
-            </SplideSlide>
+            <TabButtonTransitionGroup>
+                <SplideSlide v-for="(file, ind) in FileNames" :key="file.id">
+                    <BaseTabButton
+                        :is-active="FileStore.currentActiveFileInd === ind"
+                        :file-type="file.type"
+                        @close-file="FileStore.deleteFileByIndex(ind)"
+                        @switch-tab="FileStore.currentActiveFileInd = ind"
+                    >
+                        <template #name>{{ file.name }}</template>
+                    </BaseTabButton>
+                </SplideSlide>
+            </TabButtonTransitionGroup>
             <SplideSlide>
                 <AddFileTabButton />
             </SplideSlide>

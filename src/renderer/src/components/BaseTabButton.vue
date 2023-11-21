@@ -28,6 +28,7 @@ const switchTab = () => emit('switchTab');
 const onMouseEnter = async () => {
     showCloseBtn.value = true;
     await nextTick();
+    if (!tabBtnTxt.value) return;
     const { width } = useElementSize(closeBtn);
     Object.assign(tabBtnTxt.value.style, {
         marginRight: `${width.value}px`
@@ -36,6 +37,7 @@ const onMouseEnter = async () => {
 const onMouseLeave = () => {
     showCloseBtn.value = false;
 
+    if (!tabBtnTxt.value) return;
     Object.assign(tabBtnTxt.value.style, {
         marginRight: null
     });
@@ -54,7 +56,7 @@ const getComponent = computed(() => {
     <div class="relative" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <button
             ref="tabBtn"
-            class="overflow group relative flex h-full w-full items-center px-4 py-2 outline-none hover:bg-tab-hover focus:bg-tab-hover"
+            class="group relative flex h-full w-full items-center px-4 py-2 outline-none hover:bg-tab-hover focus:bg-tab-hover"
             type="button"
             @click="switchTab"
         >
@@ -70,7 +72,7 @@ const getComponent = computed(() => {
             </span>
             <span
                 ref="tabBtnTxt"
-                class="truncate text-sm font-semibold text-tab-foreground group-hover:text-tab-foreground-hover group-focus:text-tab-foreground-hover"
+                class="whitespace-nowrap text-sm font-semibold text-tab-foreground group-hover:text-tab-foreground-hover group-focus:text-tab-foreground-hover"
             >
                 <slot name="name"></slot>
             </span>
