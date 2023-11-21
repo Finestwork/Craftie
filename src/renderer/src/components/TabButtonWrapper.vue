@@ -11,7 +11,6 @@ import { Splide, SplideSlide } from '@splidejs/vue-splide';
 
 const FileStore = useFileStore();
 const splide = ref();
-const dropdown = ref();
 const SplideOptions = {
     controls: false,
     arrows: false,
