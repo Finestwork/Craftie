@@ -3,6 +3,8 @@ import BaseButtonDropdown from '@components/BaseButtonDropdown.vue';
 import AddFileButtonIcon from '@components/AddFileButtonIcon.vue';
 import TabButtonDropdown from '@components/TabButtonDropdown.vue';
 
+import { useTabDropdownNavigation } from '@composables/useTabDropdownNavigation';
+
 // NPM
 import { nextTick, onMounted, ref, watch } from 'vue';
 import { onClickOutside } from '@vueuse/core';
@@ -12,35 +14,8 @@ const target = ref();
 const tabButtonDropdown = ref();
 const showDropdown = ref(false);
 const { activate, deactivate } = useFocusTrap(tabButtonDropdown);
-
-const handleFocusElement = (e) => {
-    // If dropdown is not shown up, do nothing
-    if (!showDropdown.value) return;
-
-    const CurrentElement = <HTMLElement>document.activeElement;
-    if (e.key.toLowerCase() === 'arrowdown') {
-        const NextElement = <HTMLElement>CurrentElement.nextElementSibling;
-        if (!NextElement) {
-            const ParentElement = <HTMLElement>CurrentElement.parentElement;
-            const FirstChild = <HTMLElement>ParentElement.firstElementChild;
-            if (!FirstChild) return;
-            FirstChild.focus();
-            return;
-        }
-        NextElement.focus();
-    }
-    if (e.key.toLowerCase() === 'arrowup') {
-        const PreviousElement = <HTMLElement>CurrentElement.previousElementSibling;
-        if (!PreviousElement) {
-            const ParentElement = <HTMLElement>CurrentElement.parentElement;
-            const FirstChild = <HTMLElement>ParentElement.lastElementChild;
-            if (!FirstChild) return;
-            FirstChild.focus();
-            return;
-        }
-        PreviousElement.focus();
-    }
-};
+const { activate: dropdownNavigationActivate, deactivate: dropdownNavigationDeactivate } =
+    useTabDropdownNavigation(tabButtonDropdown);
 
 onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutOpenTabDropdown', () => {
@@ -49,7 +24,6 @@ onMounted(() => {
     window.electron.ipcRenderer.on('onShortcutCloseTabDropdown', () => {
         showDropdown.value = false;
     });
-    document.body.addEventListener('keydown', handleFocusElement);
 });
 
 onClickOutside(target, () => {
@@ -59,8 +33,13 @@ watch(
     () => showDropdown.value,
     async (isActive) => {
         await nextTick();
-        if (isActive) activate();
-        else deactivate();
+        if (isActive) {
+            activate();
+            dropdownNavigationActivate();
+        } else {
+            deactivate();
+            dropdownNavigationDeactivate();
+        }
     },
     { flush: 'post' }
 );
