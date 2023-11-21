@@ -56,6 +56,20 @@ watch(
     { flush: 'post' }
 );
 watch(
+    () => FileStore.files.length,
+    (value, newValue) => {
+        if (value === newValue) return;
+
+        const File = FileStore.getCurrentFile;
+        // Sometimes, file is already deleted in store
+        if (!File) return;
+
+        setEditorLanguage();
+        monacoEditor?.setValue(File.content);
+    }
+);
+
+watch(
     () => FileStore.currentActiveFileInd,
     () => {
         const File = FileStore.getCurrentFile;
