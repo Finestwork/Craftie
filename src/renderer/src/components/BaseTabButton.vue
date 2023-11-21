@@ -2,6 +2,7 @@
 import JavaScriptIcon from '@components/JavaScriptIcon.vue';
 import SassIcon from '@components/SassIcon.vue';
 import XCloseIcon from '@components/XCloseIcon.vue';
+import { useFileStore } from '@renderer/stores/FileStore';
 
 // NPM
 import { computed, nextTick, ref } from 'vue';
@@ -15,15 +16,27 @@ const Props = defineProps({
     fileType: {
         type: String,
         required: true
+    },
+    index: {
+        type: Number,
+        required: true
     }
 });
+const FileStore = useFileStore();
 const showCloseBtn = ref(false);
 const closeBtn = ref();
 const tabBtnTxt = ref();
 
-const emit = defineEmits(['closeFile', 'switchTab']);
-const closeFile = () => emit('closeFile');
-const switchTab = () => emit('switchTab');
+const closeFile = () => {
+    FileStore.deleteFileByIndex(Props.index);
+};
+const switchTab = () => {
+    FileStore.currentActiveFileInd = Props.index;
+};
+const hasFileChanged = computed(() => {
+    const File = FileStore.getCurrentFile;
+    return FileStore.currentActiveFileInd === Props.index && File.content !== File.previousContent;
+});
 
 const onMouseEnter = async () => {
     showCloseBtn.value = true;
@@ -75,6 +88,7 @@ const getComponent = computed(() => {
                 class="whitespace-nowrap text-sm font-semibold text-tab-foreground group-hover:text-tab-foreground-hover group-focus:text-tab-foreground-hover"
             >
                 <slot name="name"></slot>
+                {{ hasFileChanged ? '*' : null }}
             </span>
         </button>
         <button

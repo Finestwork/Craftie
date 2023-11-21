@@ -35,7 +35,6 @@ const FileNames = computed(() => {
 useCloseActiveTab();
 navigateOnKeyLeft();
 navigateOnKeyRight();
-
 watch(
     () => FileStore.currentActiveFileInd,
     (value: number) => {
@@ -54,8 +53,7 @@ watch(
                     <BaseTabButton
                         :is-active="FileStore.currentActiveFileInd === ind"
                         :file-type="file.type"
-                        @close-file="FileStore.deleteFileByIndex(ind)"
-                        @switch-tab="FileStore.currentActiveFileInd = ind"
+                        :index="ind"
                     >
                         <template #name>{{ file.name }}</template>
                     </BaseTabButton>
