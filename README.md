@@ -6,7 +6,6 @@ Craftie is currently in beta mode, with some basic features already implemented.
 Currently not supported:
 - import/export in javascript
 - .sass
-- code formatter
 
 &nbsp;
 
