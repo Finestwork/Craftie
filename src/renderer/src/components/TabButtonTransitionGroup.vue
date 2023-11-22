@@ -4,7 +4,7 @@ import { useFileStore } from '@renderer/stores/FileStore';
 import { useTabTransition } from '@composables/useTabTransition';
 import { useScrollFileTab } from '@composables/ipcListeners/useScrollFileTab';
 import { useSortable } from '@vueuse/integrations/useSortable';
-import { computed, ref, nextTick, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 
 const { onBeforeEnter, onEnter, onLeave } = useTabTransition();
 const FileStore = useFileStore();
@@ -19,10 +19,7 @@ const FileNames = computed({
     }
 });
 useScrollFileTab(scrollWrapper);
-onMounted(async () => {
-    await nextTick();
-    useSortable(tabWrapper.value.$el, FileNames);
-});
+useSortable(scrollWrapper, FileNames);
 </script>
 
 <template>
