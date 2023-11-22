@@ -22,10 +22,9 @@ const FileStore = useFileStore();
         </div>
 
         <div class="mt-10">
-            <BaseShortcutMessage>
-                Open Files:
-                <template #key1>Ctrl or Cmd</template>
-                <template #key2>O</template>
+            <BaseShortcutMessage :keys="['Ctrl or Cmd', 'O']"> Open Files:</BaseShortcutMessage>
+            <BaseShortcutMessage class="mt-8" :keys="['Ctrl or Cmd', 'Shift', 'Alt', 'L']">
+                Format File:
             </BaseShortcutMessage>
         </div>
 

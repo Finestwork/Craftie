@@ -5,15 +5,16 @@ import ScssParser from 'prettier/plugins/postcss';
 import { onUnmounted, ref } from 'vue';
 import { useFileStore } from '@renderer/stores/FileStore';
 
-const createJavaScriptPrettierOptions = async (code: string) => {
-    return await format(code, {
-        parser: 'babel',
-        singleQuote: true,
-        trailingComma: 'all',
-        plugins: [parseBabel, parserEstree]
-    });
-};
-const createScssPrettierOptions = async (code: string) => {
+const createFormatOptions = async (type: 'js' | 'scss', code: string) => {
+    if (type === 'js') {
+        return await format(code, {
+            parser: 'babel',
+            singleQuote: true,
+            trailingComma: 'all',
+            plugins: [parseBabel, parserEstree]
+        });
+    }
+
     return await format(code, {
         parser: 'scss',
         singleQuote: true,
@@ -24,15 +25,17 @@ const createScssPrettierOptions = async (code: string) => {
 export const formatCode = () => {
     const formattedCode = ref('');
     const FileStore = useFileStore();
-    const CurrentFile = FileStore.getCurrentFile;
     const deactivate = window.electron.ipcRenderer.on('onShortcutReformatCode', async () => {
+        const CurrentFile = FileStore.getCurrentFile;
         if (CurrentFile.type === 'js') {
-            formattedCode.value = await createJavaScriptPrettierOptions(CurrentFile.content);
+            formattedCode.value =
+                (await createFormatOptions(CurrentFile.type, CurrentFile.content)) || '';
             return;
         }
 
         if (CurrentFile.type === 'scss') {
-            formattedCode.value = await createScssPrettierOptions(CurrentFile.content);
+            formattedCode.value =
+                (await createFormatOptions(CurrentFile.type, CurrentFile.content)) || '';
         }
     });
 
