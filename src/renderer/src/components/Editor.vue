@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { initEditor } from '@composables/useEditor';
-import { useFileStore } from '@renderer/stores/FileStore';
+import { initEditor } from "@composables/useEditor";
+import { formatCode } from "@composables/ipcListeners/useCodeFormatter";
+import { useFileStore } from "@renderer/stores/FileStore";
 
 // NPM
-import { onMounted, ref, nextTick, watch, onUnmounted } from 'vue';
-import { editor } from 'monaco-editor';
+import { onMounted, ref, nextTick, watch, onUnmounted } from "vue";
+import { editor } from "monaco-editor";
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 
 const props = defineProps<{
@@ -15,6 +16,7 @@ const FileStore = useFileStore();
 let monacoEditor: IStandaloneCodeEditor | null = null;
 const editorWrapper = ref();
 const { createEditor } = initEditor();
+const { formattedCode } = formatCode();
 
 const updateLayoutOnResize = () => {
     monacoEditor?.layout();
@@ -22,8 +24,8 @@ const updateLayoutOnResize = () => {
 
 const setEditorLanguage = () => {
     const File = FileStore.files[FileStore.currentActiveFileInd];
-    const Language = File.type === 'scss' ? 'scss' : File.type === 'js' ? 'javascript' : '';
-    const Model = editor.createModel('', Language);
+    const Language = File.type === "scss" ? "scss" : File.type === "js" ? "javascript" : "";
+    const Model = editor.createModel("", Language);
     monacoEditor?.setModel(Model);
 };
 
@@ -37,15 +39,14 @@ onMounted(async () => {
 
     // Attach event listeners
     monacoEditor.onDidChangeModelContent(() => {
-        const Code = monacoEditor?.getValue?.().trim() ?? '';
+        const Code = monacoEditor?.getValue?.().trim() ?? "";
         FileStore.updateFileContent(Code);
     });
-    window.addEventListener('resize', updateLayoutOnResize);
+    window.addEventListener("resize", updateLayoutOnResize);
 });
-
 onUnmounted(() => {
     monacoEditor?.dispose();
-    window.removeEventListener('resize', updateLayoutOnResize);
+    window.removeEventListener("resize", updateLayoutOnResize);
 });
 
 watch(
@@ -53,7 +54,7 @@ watch(
     () => {
         monacoEditor?.layout?.();
     },
-    { flush: 'post' }
+    { flush: "post" }
 );
 watch(
     () => FileStore.files.length,
@@ -78,6 +79,12 @@ watch(
 
         setEditorLanguage();
         monacoEditor?.setValue(File.content);
+    }
+);
+watch(
+    () => formattedCode.value,
+    (code) => {
+        monacoEditor?.setValue(code);
     }
 );
 </script>
