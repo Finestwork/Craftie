@@ -1,25 +1,38 @@
-import { format } from "prettier/standalone";
-import parseBabel from "prettier/plugins/babel";
-import parserEstree from "prettier/plugins/estree";
-import { onUnmounted, ref } from "vue";
-import { useFileStore } from "@renderer/stores/FileStore";
+import { format } from 'prettier/standalone';
+import parseBabel from 'prettier/plugins/babel';
+import parserEstree from 'prettier/plugins/estree';
+import ScssParser from 'prettier/plugins/postcss';
+import { onUnmounted, ref } from 'vue';
+import { useFileStore } from '@renderer/stores/FileStore';
 
 const createJavaScriptPrettierOptions = async (code: string) => {
     return await format(code, {
-        parser: "babel",
+        parser: 'babel',
         singleQuote: true,
-        trailingComma: "all",
+        trailingComma: 'all',
         plugins: [parseBabel, parserEstree]
     });
 };
+const createScssPrettierOptions = async (code: string) => {
+    return await format(code, {
+        parser: 'scss',
+        singleQuote: true,
+        trailingComma: 'all',
+        plugins: [ScssParser]
+    });
+};
 export const formatCode = () => {
-    const formattedCode = ref("");
+    const formattedCode = ref('');
     const FileStore = useFileStore();
     const CurrentFile = FileStore.getCurrentFile;
-    const deactivate = window.electron.ipcRenderer.on("onShortcutReformatCode", async () => {
-        if (CurrentFile.type === "js") {
+    const deactivate = window.electron.ipcRenderer.on('onShortcutReformatCode', async () => {
+        if (CurrentFile.type === 'js') {
             formattedCode.value = await createJavaScriptPrettierOptions(CurrentFile.content);
             return;
+        }
+
+        if (CurrentFile.type === 'scss') {
+            formattedCode.value = await createScssPrettierOptions(CurrentFile.content);
         }
     });
 
