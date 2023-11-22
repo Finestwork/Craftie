@@ -1,5 +1,5 @@
-# Heads up!
-Craftie is still in beta mode, but some basic features are already implemented and still trying to add more features. Please note that I have only tested this application on windows but you can run the application on Linux and macOS.
+# Heads-up!
+Craftie is currently in beta mode, with some basic features already implemented. I am still working on adding more features. Also, please note that craftie has only been tested on Windows 11, but it should also run on Linux and macOS since it is an electron app.
 
 ![Demo](demo.gif)
 
