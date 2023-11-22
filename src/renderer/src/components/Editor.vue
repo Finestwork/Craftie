@@ -79,6 +79,7 @@ watch(
 
         setEditorLanguage();
         monacoEditor?.setValue(File.content);
+        monacoEditor?.focus();
     }
 );
 watch(
