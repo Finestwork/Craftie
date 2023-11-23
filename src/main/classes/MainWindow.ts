@@ -9,6 +9,7 @@ export default class MainWindow {
     constructor() {
         this._mainWindow = null;
     }
+
     get mainWindow(): BrowserWindow | null {
         return this._mainWindow;
     }
@@ -32,7 +33,7 @@ export default class MainWindow {
             titleBarOverlay: {
                 color: '#090B10',
                 symbolColor: '#6A7080',
-                height: 32
+                height: 40
             },
             center: true,
             webPreferences: {

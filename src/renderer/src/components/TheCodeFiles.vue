@@ -53,7 +53,6 @@ onUnmounted(() => {
             @mousedown="onMouseDownResizePanel"
             @mouseup="onMouseUpStopResize"
         ></span>
-
         <ResultPanel :style="{ width: `${rightPanelWidth}px` }" />
     </div>
 </template>
