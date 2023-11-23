@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import anime from 'animejs/lib/anime';
 import { computePosition, offset } from '@floating-ui/dom';
+import type { Side } from '@floating-ui/dom';
 import { ref } from 'vue';
 
 const displayTooltip = ref(false);
@@ -8,8 +9,8 @@ const reference = ref();
 const floating = ref();
 
 const onBeforeEnter = (el) => {
-    const Middlewares = [offset(5)];
-    computePosition(reference.value, el, { middleware: Middlewares }).then(({ x, y }) => {
+    const Options = { placement: 'bottom' as Side, middleware: [offset(5)] };
+    computePosition(reference.value, el, Options).then(({ x, y }) => {
         Object.assign(el.style, {
             left: `${x}px`,
             top: `${y + 16}px`,
