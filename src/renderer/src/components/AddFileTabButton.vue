@@ -46,7 +46,7 @@ watch(
 </script>
 
 <template>
-    <BaseButtonDropdown :show="showDropdown">
+    <BaseButtonDropdown class="z-50" :show="showDropdown">
         <AddFileButtonIcon
             ref="target"
             :is-active="showDropdown"

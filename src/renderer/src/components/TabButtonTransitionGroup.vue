@@ -32,7 +32,7 @@ useSortable(scrollWrapper, Files, {
     <div ref="tabWrapper" class="flex overflow-hidden">
         <TransitionGroup
             ref="scrollWrapper"
-            class="hide-scrollbar flex max-w-full overflow-scroll"
+            class="hide-scrollbar relative z-50 flex max-w-full overflow-scroll"
             tag="ul"
             @before-enter="onBeforeEnter"
             @enter="onEnter"
