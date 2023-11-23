@@ -7,6 +7,8 @@ declare global {
             runCode: (type: string, code: string) => void;
             saveFile: (type: string, code: string) => void;
             overwriteFile: (filePath: string, code: string) => void;
+            saveFileBeforeClosing: (filePath: string, code: string) => void;
+            showConfirmDialog: () => void;
         };
     }
 }

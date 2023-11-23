@@ -5,7 +5,8 @@ import RunButton from '@components/RunButton.vue';
 import TabButtonWrapper from '@components/TabButtonWrapper.vue';
 import {
     useSaveFileOnKeypress,
-    useFileSuccessfullyStored
+    useFileSuccessfullyStored,
+    useSaveFileBeforeClosing
 } from '@composables/ipcListeners/useSaveFile';
 import { useResizePanel } from '@composables/useResizePanel';
 
@@ -22,6 +23,7 @@ const {
 } = useResizePanel(divider);
 useSaveFileOnKeypress();
 useFileSuccessfullyStored();
+useSaveFileBeforeClosing();
 onMounted(() => {
     // Divider's initial position
     Object.assign(divider.value.style, {

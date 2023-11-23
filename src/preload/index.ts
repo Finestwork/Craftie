@@ -11,6 +11,12 @@ const api = {
     },
     overwriteFile(filePath: string, code: string) {
         ipcRenderer.send('overwriteFile', filePath, code);
+    },
+    saveFileBeforeClosing(filePath: string, code: string) {
+        ipcRenderer.send('saveFileBeforeClosing', filePath, code);
+    },
+    showConfirmDialog() {
+        ipcRenderer.send('showConfirmDialog');
     }
 };
 

@@ -38,7 +38,6 @@ export const useSaveFileOnKeypress = () => {
         deactivateFileChangeListener();
     });
 };
-
 export const useFileSuccessfullyStored = () => {
     const deactivate = window.electron.ipcRenderer.on(
         'fileSavedSuccessfully',
@@ -51,5 +50,21 @@ export const useFileSuccessfullyStored = () => {
 
     onUnmounted(() => {
         deactivate();
+    });
+};
+
+export const useSaveFileBeforeClosing = () => {
+    const FileStore = useFileStore();
+    const deactivateSaveFile = window.electron.ipcRenderer.on('saveFileBeforeClose', () => {
+        const File = FileStore.getCurrentFile;
+        window.api.saveFileBeforeClosing(File.filePath, File.content);
+    });
+    const deactivateCloseFile = window.electron.ipcRenderer.on('closeFile', () => {
+        FileStore.deleteCurrentActiveFile();
+    });
+
+    onUnmounted(() => {
+        deactivateSaveFile();
+        deactivateCloseFile();
     });
 };

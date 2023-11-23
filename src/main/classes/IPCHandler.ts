@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain, dialog } from 'electron';
+import type { IpcMainEvent } from 'electron';
 import { basename } from 'path';
 import vm from 'vm';
 import { writeFile } from 'fs/promises';
@@ -14,6 +15,8 @@ export default class IPCHandler {
         this.runCode();
         this.saveFile();
         this.overwriteFile();
+        this.saveFileBeforeClosing();
+        this.showConfirmDialog();
     }
 
     /**
@@ -95,13 +98,54 @@ export default class IPCHandler {
      */
     private overwriteFile() {
         ipcMain.on('overwriteFile', async (e, filePath: string, code: string) => {
+            await this._overwriteFile(e, filePath, code);
+        });
+    }
+
+    private saveFileBeforeClosing() {
+        ipcMain.on('saveFileBeforeClosing', async (e, filePath: string, code: string) => {
             const CurrentBrowserWindow = BrowserWindow.fromWebContents(e.sender);
             if (!CurrentBrowserWindow) return;
-
-            await writeFile(filePath, code, { encoding: 'utf-8' });
-
-            // Tell the renderer to update previous content from FileStore
-            CurrentBrowserWindow.webContents.send('updateFilePreviousContent', code);
+            await this._overwriteFile(e, filePath, code);
+            CurrentBrowserWindow.webContents.send('closeFile');
         });
+    }
+
+    private showConfirmDialog() {
+        ipcMain.on('showConfirmDialog', async (e) => {
+            const CurrentBrowserWindow = BrowserWindow.fromWebContents(e.sender);
+            if (!CurrentBrowserWindow) return;
+            const Result = dialog.showMessageBoxSync(CurrentBrowserWindow, {
+                type: 'warning',
+                buttons: ['Yes', 'No', 'Cancel'],
+                defaultId: 2,
+                title: 'Confirm',
+                message: 'Do you want to save the changes you made to this document?',
+                detail: "Your changes will be lost if you don't save them."
+            });
+
+            if (Result === 0) {
+                CurrentBrowserWindow.webContents.send('saveFileBeforeClose');
+                return;
+            }
+
+            if (Result === 1) {
+                CurrentBrowserWindow.webContents.send('closeFile');
+            }
+        });
+    }
+
+    /**
+     * Helpers
+     */
+
+    private async _overwriteFile(e: IpcMainEvent, filePath: string, code: string) {
+        const CurrentBrowserWindow = BrowserWindow.fromWebContents(e.sender);
+        if (!CurrentBrowserWindow) return;
+
+        await writeFile(filePath, code, { encoding: 'utf-8' });
+
+        // Tell the renderer to update previous content from FileStore
+        CurrentBrowserWindow.webContents.send('updateFilePreviousContent', code);
     }
 }
