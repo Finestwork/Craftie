@@ -8,9 +8,7 @@ import BaseTooltipFloatUp from '@components/BaseTooltipFloatUp.vue';
         </template>
 
         <template #float>
-            <span
-                class="rounded-md bg-button-dark-hover px-2 py-2 text-xs font-semibold text-white"
-            >
+            <span class="rounded-md bg-button-dark px-2 py-2 text-xs font-semibold text-[#cccccc]">
                 <slot name="tooltip"></slot>
             </span>
         </template>
