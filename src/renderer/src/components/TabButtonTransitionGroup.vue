@@ -3,14 +3,14 @@ import BaseTabButton from '@components/BaseTabButton.vue';
 import { useFileStore } from '@renderer/stores/FileStore';
 import { useTabTransition } from '@composables/useTabTransition';
 import { useScrollFileTab } from '@composables/ipcListeners/useScrollFileTab';
-import { useSortable } from '@vueuse/integrations/useSortable';
-import { computed, ref } from 'vue';
+import { useSortable, moveArrayElement } from '@vueuse/integrations/useSortable';
+import { computed, nextTick, ref } from 'vue';
 
 const { onBeforeEnter, onEnter, onLeave } = useTabTransition();
 const FileStore = useFileStore();
 const tabWrapper = ref();
 const scrollWrapper = ref();
-const FileNames = computed({
+const Files = computed({
     get() {
         return FileStore.files;
     },
@@ -19,7 +19,13 @@ const FileNames = computed({
     }
 });
 useScrollFileTab(scrollWrapper);
-useSortable(scrollWrapper, FileNames);
+useSortable(scrollWrapper, Files, {
+    async onUpdate(e) {
+        await nextTick();
+        moveArrayElement(Files.value, e.oldIndex, e.newIndex);
+        FileStore.currentActiveFileInd = e.newIndex;
+    }
+});
 </script>
 
 <template>
@@ -32,7 +38,7 @@ useSortable(scrollWrapper, FileNames);
             @enter="onEnter"
             @leave="onLeave"
         >
-            <li v-for="(file, ind) in FileNames" :key="file.id">
+            <li v-for="(file, ind) in Files" :key="file.id">
                 <BaseTabButton
                     :is-active="FileStore.currentActiveFileInd === ind"
                     :file-type="file.type"
