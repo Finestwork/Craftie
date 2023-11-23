@@ -14,16 +14,34 @@ export const runCode = () => {
 };
 
 export const displayResult = () => {
-    const result = ref();
-    const deactivate = window.electron.ipcRenderer.on('displayCodeResult', (_, codeResult) => {
-        result.value = codeResult.slice();
-    });
+    const result = ref('');
+    const isError = ref(false);
+    const deactivateCodeResult = window.electron.ipcRenderer.on(
+        'displayCodeResult',
+        (_, codeResult) => {
+            isError.value = false;
+            if (!codeResult) {
+                result.value = '';
+                return;
+            }
+            result.value = codeResult.slice();
+        }
+    );
+    const deactivateCodeError = window.electron.ipcRenderer.on(
+        'displayErrorResult',
+        (_, codeResult) => {
+            result.value = codeResult;
+            isError.value = true;
+        }
+    );
 
     onUnmounted(() => {
-        deactivate();
+        deactivateCodeResult();
+        deactivateCodeError();
     });
 
     return {
-        result
+        result,
+        isError
     };
 };

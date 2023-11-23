@@ -50,14 +50,18 @@ export default class IPCHandler {
             const browserWindow = BrowserWindow.fromWebContents(event.sender);
             if (!browserWindow) return;
 
-            switch (type) {
-                case 'js':
-                    runJavaScript(browserWindow, code);
-                    break;
-                case 'sass':
-                case 'scss':
-                    runSass(browserWindow, code);
-                    break;
+            try {
+                switch (type) {
+                    case 'js':
+                        runJavaScript(browserWindow, code);
+                        break;
+                    case 'sass':
+                    case 'scss':
+                        runSass(browserWindow, code);
+                        break;
+                }
+            } catch (e) {
+                browserWindow.webContents.send('displayErrorResult', (<Error>e).stack);
             }
         });
     }

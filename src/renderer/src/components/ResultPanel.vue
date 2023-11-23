@@ -2,7 +2,7 @@
 import ScssResult from '@components/ScssResult.vue';
 import { displayResult } from '@composables/ipcListeners/useCodeHandler';
 
-const { result } = displayResult();
+const { result, isError } = displayResult();
 </script>
 
 <template>
@@ -12,6 +12,11 @@ const { result } = displayResult();
                 {{ code }}
             </p>
         </div>
-        <ScssResult v-else-if="typeof result === 'string'" :code="result" />
+        <template v-else>
+            <ScssResult v-if="!isError" :code="result" />
+            <pre v-else class="text-red-400">
+                {{ result }}
+            </pre>
+        </template>
     </div>
 </template>
