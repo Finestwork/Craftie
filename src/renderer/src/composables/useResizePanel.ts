@@ -1,22 +1,81 @@
-import { Ref, unref, ref } from 'vue';
+import { useResultPanelStore } from '@renderer/stores/ResultPanelStore';
+import { Ref, unref, ref, computed, watch, onMounted } from 'vue';
 
-export function useResizePanel(target: Ref<HTMLElement>) {
-    const ClientTotalWidth = document.body.clientWidth;
+export function useResizePanel(wrapper: Ref<HTMLElement>, target: Ref<HTMLElement>) {
+    const ResultPanelStore = useResultPanelStore();
     const isDragging = ref(false);
-    const leftPanelWidth = ref(ClientTotalWidth / 2);
-    const rightPanelWidth = ref(ClientTotalWidth / 2);
+    const leftPanelSize = ref(0);
+    const rightPanelSize = ref(0);
+    const dividerStyle = computed(() => {
+        if (ResultPanelStore.isHorizontal) {
+            return {
+                left: `${leftPanelSize.value}px`,
+                height: '100%',
+                width: '1.5px',
+                cursor: 'col-resize'
+            };
+        }
+
+        return {
+            top: `${leftPanelSize.value}px`,
+            width: '100%',
+            height: '1.5px',
+            cursor: 'row-resize'
+        };
+    });
+    const leftPanelStyle = computed(() => {
+        if (ResultPanelStore.atRight) {
+            return { width: `${leftPanelSize.value}px`, height: '100%', left: 0 };
+        }
+        if (ResultPanelStore.atLeft) {
+            return { width: `${rightPanelSize.value}px`, height: '100%', right: 0 };
+        }
+        if (ResultPanelStore.atTop) {
+            return { width: '100%', height: `${rightPanelSize.value}px`, bottom: 0, left: 0 };
+        }
+
+        // Else it must be at the bottom
+        return { width: '100%', height: `${leftPanelSize.value}px`, top: 0, left: 0 };
+    });
+    const rightPanelStyle = computed(() => {
+        if (ResultPanelStore.atRight) {
+            return { width: `${rightPanelSize.value}px`, height: '100%', right: 0 };
+        }
+        if (ResultPanelStore.atLeft) {
+            return { width: `${leftPanelSize.value}px`, height: '100%', left: 0 };
+        }
+        if (ResultPanelStore.atTop) {
+            return { width: '100%', height: `${leftPanelSize.value}px`, top: 0, left: 0 };
+        }
+        // Else it must be at the bottom
+        return { width: '100%', height: `${rightPanelSize.value}px`, bottom: 0, left: 0 };
+    });
 
     // Helpers
     const onMouseMove = (e: MouseEvent) => {
         e.preventDefault();
         const Target = unref(target);
-        const MouseX = e.clientX;
-        const TargetLeft = Target.getBoundingClientRect().left;
-        const CurrentClientWidth = document.body.clientWidth;
-        leftPanelWidth.value = TargetLeft;
-        rightPanelWidth.value = CurrentClientWidth - TargetLeft;
+
+        if (ResultPanelStore.isHorizontal) {
+            const MouseX = e.clientX;
+            const TargetLeft = Target.getBoundingClientRect().left;
+            const CurrentClientWidth = unref(wrapper).clientWidth;
+            leftPanelSize.value = TargetLeft;
+            rightPanelSize.value = CurrentClientWidth - TargetLeft;
+            Object.assign(Target.style, {
+                left: `${MouseX}px`
+            });
+
+            return;
+        }
+
+        const MouseY = e.clientY;
+        const WrapperTop = unref(wrapper).offsetTop;
+        const ClientHeight = unref(wrapper).clientHeight;
+        leftPanelSize.value = MouseY - WrapperTop;
+        rightPanelSize.value = ClientHeight - leftPanelSize.value;
         Object.assign(Target.style, {
-            left: `${MouseX}px`
+            top: `${leftPanelSize.value}px`
         });
     };
     const cancelEvents = () => {
@@ -39,14 +98,34 @@ export function useResizePanel(target: Ref<HTMLElement>) {
         const Target = unref(target);
         const CurrentClientWidth = document.body.clientWidth;
         const TargetLeft = Target.getBoundingClientRect().left;
-        leftPanelWidth.value = TargetLeft;
-        rightPanelWidth.value = CurrentClientWidth - TargetLeft;
+        leftPanelSize.value = TargetLeft;
+        rightPanelSize.value = CurrentClientWidth - TargetLeft;
+    };
+    const getInitialSize = () => {
+        const Rect = unref(wrapper).getBoundingClientRect();
+        const ClientTotalWidth = Rect.width;
+        const ClientTotalHeight = Rect.height;
+        return ResultPanelStore.isHorizontal ? ClientTotalWidth / 2 : ClientTotalHeight / 2;
     };
 
+    onMounted(() => {
+        leftPanelSize.value = getInitialSize();
+        rightPanelSize.value = getInitialSize();
+    });
+    watch(
+        () => ResultPanelStore.position,
+        () => {
+            rightPanelSize.value = getInitialSize();
+            leftPanelSize.value = getInitialSize();
+        }
+    );
     return {
         isDragging,
-        leftPanelWidth,
-        rightPanelWidth,
+        leftPanelSize,
+        rightPanelSize,
+        dividerStyle,
+        leftPanelStyle,
+        rightPanelStyle,
         onMouseDownResizePanel,
         onMouseUpStopResize,
         onResizeUpdateLayout
