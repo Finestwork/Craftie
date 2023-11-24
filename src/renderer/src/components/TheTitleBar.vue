@@ -20,16 +20,28 @@ const onClickChangeLayoutPosition = (type: PanelPosition) => {
     >
         <div class="no-drag-region flex items-center pl-2.5">
             <TitleBarLogo />
-            <BaseTitleBarButtonIcon @click="onClickChangeLayoutPosition('left')">
+            <BaseTitleBarButtonIcon
+                :active="ResultPanelStore.atLeft"
+                @click="onClickChangeLayoutPosition('left')"
+            >
                 <LeftPanelIcon />
             </BaseTitleBarButtonIcon>
-            <BaseTitleBarButtonIcon @click="onClickChangeLayoutPosition('right')">
+            <BaseTitleBarButtonIcon
+                :active="ResultPanelStore.atRight"
+                @click="onClickChangeLayoutPosition('right')"
+            >
                 <RightPanelIcon />
             </BaseTitleBarButtonIcon>
-            <BaseTitleBarButtonIcon @click="onClickChangeLayoutPosition('bottom')">
+            <BaseTitleBarButtonIcon
+                :active="ResultPanelStore.atBottom"
+                @click="onClickChangeLayoutPosition('bottom')"
+            >
                 <BottomPanelIcon />
             </BaseTitleBarButtonIcon>
-            <BaseTitleBarButtonIcon @click="onClickChangeLayoutPosition('top')">
+            <BaseTitleBarButtonIcon
+                :active="ResultPanelStore.atTop"
+                @click="onClickChangeLayoutPosition('top')"
+            >
                 <TopPanelIcon />
             </BaseTitleBarButtonIcon>
         </div>
